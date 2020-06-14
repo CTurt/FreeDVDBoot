@@ -1,5 +1,5 @@
 # FreeDVDBoot
-PlayStation 2 DVD Player Exploit. This allows you to burn your own PlayStation 2 homebrew discs and play them on an unmodified console as seen in the [demo video](https://youtube.com/).
+PlayStation 2 DVD Player Exploit. This allows you to burn your own PlayStation 2 homebrew discs and play them on an unmodified console as seen in the [demo video](https://www.youtube.com/watch?v=ez0y-hz3VuM).
 
 For technical details please refer to my [blog post](https://cturt.github.io/freedvdboot.html).
 
