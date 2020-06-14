@@ -36,3 +36,8 @@ Once you've placed all the homebrew files you'd like into the directory, generat
 
 ## Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which can be a pain.
+
+## Replacing loader payload
+If you wish to work on the loader payload, see run `build.sh` inside `PAYLOAD` directory, and copy the output `fullpayload.bin` to `VIDEO_TS/VIDEO_TS.IFO` at offset `0x2bb4`.
+
+The default loader will boot `VIDEO_TS/VTS_02_0.IFO` as an ELF file, but tweaks might be desired to improve compatibility.
