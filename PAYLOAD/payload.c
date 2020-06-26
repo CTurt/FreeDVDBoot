@@ -1,5 +1,9 @@
 #include <stddef.h>
 
+// Pick one
+#define LOAD_FROM_VTS_02_0_IFO
+//#define LOAD_FROM_SECTOR_RELATIVE_TO_VIDEO_TS_IFO (151 - 138 - 7)
+
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
 #define pointToIFO ((void (*)(unsigned int index, unsigned int lba, unsigned int offset))0x25c880)
@@ -82,8 +86,8 @@ static void readData(void *dest, unsigned int offset, size_t n) {
 
 	if(offset % 0x800) {
 		getBufferInternal("", 1, offset / 0x800, buffer, 1, 0);
-		memcpy_(dest, buffer + offset % 0x800, min(0x800 - offset, n));
-		copied += min(0x800 - offset, n);
+		memcpy_(dest, buffer + offset % 0x800, min(0x800 - (offset % 0x800), n));
+		copied += min(0x800 - (offset % 0x800), n);
 	}
 
 	if(remaining >= 0x800) {
@@ -103,25 +107,31 @@ __attribute__((noreturn)) void _start(void) {
 
 	int i;
 
-	// point to VTS_02_0.IFO
-	pointToIFO(2, 0, 0);
-	
-	// Force a read from VTS_02_0.IFO
-	char head[64];
-	getDiscData(64, &head);
+	#ifdef LOAD_FROM_VTS_02_0_IFO
+		// point to VTS_02_0.IFO
+		pointToIFO(2, 0, 0);
+		
+		// Force a read from VTS_02_0.IFO
+		char head[64];
+		getDiscData(64, &head);
+
+		#define RELATIVE_SECTOR 0
+	#else
+		#define RELATIVE_SECTOR LOAD_FROM_SECTOR_RELATIVE_TO_VIDEO_TS_IFO
+	#endif
 
 	// Based on https://github.com/AKuHAK/uLaunchELF/blob/master/loader/loader.c
 	elf_header_t eh;
-	readData(&eh, 0, sizeof(elf_header_t));
+	readData(&eh, RELATIVE_SECTOR * 0x800, sizeof(elf_header_t));
 
 	elf_pheader_t eph[eh.phnum];
-	readData(&eph, eh.phoff, sizeof(elf_pheader_t) * eh.phnum);
+	readData(&eph, RELATIVE_SECTOR * 0x800 + eh.phoff, sizeof(elf_pheader_t) * eh.phnum);
 	
 	for (i = 0; i < eh.phnum; i++) {
 		if (eph[i].type != ELF_PT_LOAD)
 			continue;
 
-		readData(eph[i].vaddr, eph[i].offset, eph[i].filesz);
+		readData(eph[i].vaddr, RELATIVE_SECTOR * 0x800 + eph[i].offset, eph[i].filesz);
 		if(eph[i].memsz > eph[i].filesz) memset(eph[i].vaddr + eph[i].filesz, 0, eph[i].memsz - eph[i].filesz);
 	}
 
