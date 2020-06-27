@@ -6,7 +6,7 @@ For technical details please refer to my [blog post](https://cturt.github.io/fre
 ## Step 1: Identify your DVD Player Version
 Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has.
 
-For initial release only DVD Player version 3.10E is supported (as that's the console I have). In the future I may look at other firmware versions, and hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
+For initial release only DVD Player version 3.10E is supported (as that's the console I have) - UPDATE: someone tested 3.10E exploit on 3.10U and it worked, so I guess region doesn't matter. In the future I may look at other firmware versions, and hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
 
 Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over USB storage), such as `3.10E.iso`. If you intend to make your own image containing additional homebrew / modified initial loader, please read on.
 
