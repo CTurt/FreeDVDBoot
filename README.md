@@ -6,16 +6,16 @@ For technical details please refer to my [blog post](https://cturt.github.io/fre
 ## Step 1: Identify your DVD Player Version
 Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has. Still early in terms of support for different versions.
 
-Not sure if region matters or not, but language is confirmed to affect the exploit (https://www.youtube.com/watch?v=zelVQcD7HCY). Please set your PS2 language to English in the system configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
+Language is also confirmed to affect the exploit (https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
 
-So far I only tested 3.10 on E and U, and 3.11 isn't confirmed working on hardware yet (J with English language should work, E and U not).
+So far I only tested 3.10 on E and U on hardware, and 3.11 isn't confirmed working on hardware yet (J with English language).
 
 Currently only support:
 
-3.10 (E or U - with English language set in settings)
-3.11 (J - with English language set in settings)
+- 3.10 (E or U - with English language set in settings)
+- 3.11 (J - with English language set in settings)
 
-Check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions. Don't bother trying on a not supported firmware, it won't work...
+Check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions. Don't bother trying on a not supported region/firmware configuration, it won't work...
 
 Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over USB storage), such as `3.10EU.iso`. If you intend to make your own image containing additional homebrew / modified initial loader, please read on.
 
