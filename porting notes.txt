@@ -54,7 +54,7 @@ Insert fullpayload.bin into VIDEO_TS.IFO at offset 0x2ba4
 test, and see ule boot successfully in pcsx2!
 
 
-3.11E (English language)
+3.11 all (English language)
 getDiscData and getDiscByte seem the same as in 3.11J
 overflow call is also at 0x257564
 fpIndex also 0x143bc4a
@@ -68,3 +68,14 @@ now break at writing payload (0x1500014)
 currentDiscBytePointer points to 0x014ff57d
 nearest landmark is "ABOVE 3" string at 0x14ff41b
 so payload goes at ABOVE 3 location in IFO + (0x014ff57d - 0x14ff41b) - 1 = 0x2954
+
+
+
+hybrid 3.10 + 3.11
+so starting with a 3.11 base VIDEO_TS.IFO
+currentDiscBytePointer offset for 3.10 is 00002744
+for 3.11 is 0000277c
+copy 3.10 currentDiscBytePointer and endDiscBytePointer corruption to its offset (8 bytes at 00002744)
+fpIndex for 3.10 is offset 00002faa, so copy those 2 bytes over
+payload for 3.10 is at 0x2bb4
+

@@ -14,6 +14,8 @@ Currently only support:
 - 3.10 (E or U - maybe other regions too, untested - with English language set in settings) - confirmed working on hardware by CTurt, and others
 - 3.11 (all regions - EUMACDGJ - with English language set in settings) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others
 
+UPDATE: Experimental hybrid ISO - 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English :)
+
 Please don't bother trying on a not supported firmware/language configuration, it won't work...
 
 Language is also confirmed to [affect the exploit](https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
@@ -27,12 +29,12 @@ You should use DVD-R (others work but put more strain on PS2 laser), and make su
 If you intend to make your own image containing additional homebrew / modified initial loader, please read on. Step 1 is the same, first identify firmware version.
 
 ### Step 2: Copy your homebrew
-Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory (EG: `3.10EU/`).
+Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory in the `Filesystem` (EG: `Filesystem/3.10EU/`).
 
 ### Step 3: Make an image
 Once you've placed all the homebrew files you'd like into the directory, generate a UDF image of the directory. The easiest way is probably to install `genisoimage` (comes pre-installed on many Linux distributions like Ubuntu) / `mkisofs` and run the following (where `exploit.iso` is the output and `3.10EU` is the directory containing `VIDEO_TS` and any homebrew):
 
-    genisoimage -udf -o exploit.iso 3.10EU
+    genisoimage -udf -o exploit.iso Filesystem/3.10EU
 
 ### Step 4: Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which is beyond the scope of this README. With that said, if you aren't touching anything in `VIDEO_TS`, there shouldn't really be any reason for the exploit to fail.
