@@ -6,7 +6,7 @@ For technical details please refer to my [blog post](https://cturt.github.io/fre
 ## Step 1: Identify your DVD Player Version
 Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has.
 
-Not sure if region matters or not, but so far I only tested E and U so J and others aren't guaranteed.
+Not sure if region matters or not, but so far I only tested 3.10 on E and U, and 3.11 isn't tested yet on hardware (J should work, not 100% sure regarding E or U - will update this page later when people ping me on it)
 
 Currently only support:
 
