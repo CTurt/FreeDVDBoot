@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - 'porting notes.txt'
+      - 'README.md'
+  pull_request:
+    paths-ignore:
+      - 'porting notes.txt'
+      - 'README.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ps2dev/ps2dev
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['3.10EU', '3.11E', '3.11J']
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      working-directory: PAYLOADS/PAYLOAD_${{ matrix.version }}
+      run: |
+        chmod +x build.sh
+        ./build.sh
+    - name: Generate iso
+      run: genisoimage -udf -o exploit.iso ${{ matrix.version }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.version }}
+        path: exploit.iso
