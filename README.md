@@ -11,10 +11,10 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 Currently only support:
 
-- 3.10 (E or U - maybe other regions too, untested - with English language set in settings) - confirmed working on hardware by CTurt, and others
-- 3.11 (all regions - EUMACDGJ - with English language set in settings) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others
+- 3.10 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by CTurt, and others
+- 3.11 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others
 
-UPDATE: Experimental hybrid ISO - 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English :)
+UPDATE: Experimental hybrid ISO for both 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English. Confirmed [working on 3.11](https://twitter.com/TheWizWiki/status/1277670129355161601).
 
 Please don't bother trying on a not supported firmware/language configuration, it won't work...
 
