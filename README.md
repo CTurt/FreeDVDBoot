@@ -3,33 +3,44 @@ PlayStation 2 DVD Player Exploit. This allows you to burn your own PlayStation 2
 
 For technical details please refer to my [blog post](https://cturt.github.io/freedvdboot.html).
 
-## Step 1: Identify your DVD Player Version
-Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has. Still early in terms of support for different versions, check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
+## Basic setup
+Using prebuilt ISOs in this repo (PREBUILT ISOs folder).
 
-Language is also confirmed to [affect the exploit](https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
+### Step 1: Identify your DVD Player Version
+Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has. Still early in terms of support for different versions, check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
 
 Currently only support:
 
-- 3.10 (E or U - with English language set in settings) - confirmed working on hardware by CTurt
-- 3.11 (E or U - with English language set in settings) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440)
-- 3.11 (J - with English language set in settings) - no one has tested this on hardware yet to my knowledge
+- 3.10 (E or U - maybe other regions too, untested - with English language set in settings) - confirmed working on hardware by CTurt, and others
+- 3.11 (all regions - EUMACDGJ - with English language set in settings) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others
 
-Don't bother trying on a not supported region/firmware configuration, it won't work...
+Please don't bother trying on a not supported firmware/language configuration, it won't work...
 
-Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over USB storage), such as `3.10EU.iso`. If you intend to make your own image containing additional homebrew / modified initial loader, please read on, otherwise it's as simple as just burning that ISO and putting it in your console.
+Language is also confirmed to [affect the exploit](https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
 
-## Step 2: Copy your homebrew
+### Step 2: Burn
+Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over USB storage), such as `3.10EU.iso`.
+
+You should use DVD-R (others work but put more strain on PS2 laser), and make sure to finalise the disc as burning option.
+
+## Custom disc setup
+If you intend to make your own image containing additional homebrew / modified initial loader, please read on. Step 1 is the same, first identify firmware version.
+
+### Step 2: Copy your homebrew
 Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory (EG: `3.10EU/`).
 
-## Step 3: Make an image
+### Step 3: Make an image
 Once you've placed all the homebrew files you'd like into the directory, generate a UDF image of the directory. The easiest way is probably to install `genisoimage` (comes pre-installed on many Linux distributions like Ubuntu) / `mkisofs` and run the following (where `exploit.iso` is the output and `3.10EU` is the directory containing `VIDEO_TS` and any homebrew):
 
     genisoimage -udf -o exploit.iso 3.10EU
 
-## Step 4: Test and burn
+### Step 4: Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which is beyond the scope of this README. With that said, if you aren't touching anything in `VIDEO_TS`, there shouldn't really be any reason for the exploit to fail.
 
-You should use DVD-R (others work but put more strain on PS2 laser), and make sure to finalise the disc as burning option.
+## Troubleshooting - please read
+Disc doesn't spin on slim console - press the lid down hard to ensure the sensors detect that the lid is closed
+
+PS2 says "unable to read disc" - your DVD laser might not work, please try a regular DVD video first. If that works, make sure you are finalising your disc when burning, and I recommend DVD-R rather than any other types of DVD as those put more strain on the laser.
 
 ## OPTIONAL: Replace the initial program
 I've included uLaunchELF recompiled with [DVD support](https://github.com/ps2dev/ps2sdk/pull/130) as the default initial program. It presents a menu which allows you to select any of the homebrew programs you chose to include on the disc (and also allows booting from USB).
