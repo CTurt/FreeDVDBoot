@@ -1,0 +1,50 @@
+3.11
+
+make memory dump for EE (PCSX2 save state, rename to zip extract, eeMemory.bin)
+search DVDVIDEO-VMG = 0x014331c8
+memory write breakpoint to find sb instruction at 0x00258BC8
+decompile that in Ghidra, you'll see getDiscData is 0x258b98, and getDiscByte is 0x258ac8
+inside getDiscByte, we can see that currentDiscBytePointer is 0x143b3e4 and endDiscBytePointer is 0x143b3e8
+xref getDiscData, 20 locations, go through them till you find the buffer overflow described in my post which copies with size (a + b + c) * 8, it's the call at 0x257564
+note destination of copy, which is 0x14351cc
+so we control range 0x14351cc - 0x15B51B4 (0x14351cc + 3 * 0xffff * 8)
+go to destination + roughly 0x6A76 and search for fpIndex (xrefs will be functions looking like setFpIndex and the OOB call as shown in my post)
+fpIndex is at 0x143bc4a
+OOB call is at 0x25ab44 (actually there are more than 1, but this one is executed first - set memory read breakpoint on fpIndex to find it)
+note the base of the function pointer array, in this case 0x003b3050
+dump the memory from base till 0x003b3050 + 4 * 0xffff = 0x3F304C, group into 4 bytes and search for jump targets that fit within overflow range
+eg: searching for "14352... " I see some results
+must also be 4 byte aligned
+3.11 is actually pretty good, there are quite a few results that should work
+0x01522944 looks pretty good, it's at 0x3E4A74, so index would be (0x3E4A74-0x003b3050)/4 = 0xC689
+// a backup incase that didn't work would be 0x14431114 (at 0x3B8164)
+ok, we have everything we need - let's make the IFO exploit file
+the copy size should be at the same offset since that's part of the spec, so no need to change that
+now run and break at the copy (0x257564), v1 is 0xffff so we're triggering the bug :)
+set a memory write breakpoint for the byte just before currentDiscBytePointer (0x143b3e4 - 1), wait till its set by the sb instruction in getDiscData
+now note down currentDiscBytePointer's value, it's 0x0143a94c (so will be +1 by the time we are writing currentDiscBytePointer)
+goto that in the memory viewer to see where we're copying from
+we can see the "ABOVE 3" note I wrote to myself just below it (just an arbitrary marker point), so we can work out that this corresponds to offset 0x000277c in the IFO
+we write currentDiscBytePointer's same value, and then 0xffffff for endDiscBytePointer next to it
+run again and make sure it overwrites the same value it already has (easy to get off-by-one here)
+that's probably the hardest part done now, we are now overwriting fpIndex and payload space with controlled contents
+break at writing fpIndex (0x143bc4a), and see it's corrupted by getDiscData
+note down currentDiscBytePointer value, it's 0x0143b1b3
+goto that in memory view and look what it's near to, we see that the 7e e0 fpIndex for 3.10 is just above
+so we can count our offset will be at offset 0x2fe2 in the IFO
+we wanted to corrupt that to 89 c6, which should lead to jumping to 0x01522944
+run again and now break at the OOB call (0x25ab44)
+sure enough we can trace it and see jump v0 which is 0x01522944 (we got lucky and already corrupted the thing that stops resetting fpIndex)
+now we just need to run again to the copy, and break at writing 0x01522944 to find where to start our initial payload in the IFO
+currentDiscBytePointer value is 0x01521ead, which is just above where we put payload for 3.10, at offset 0x2ba4
+BOOM! We have arbitrary code execution.
+for now, I haven't reimplemented everything needed by the loader, so we need to find a few functions to use in our loader - this will be improved in future
+you need getBufferInternal (getBuffer is called inside getDiscByteInternal, 0x295518 in our case, and then getBufferInternal is called inside that, 0x2952f0 for us)
+getDiscData (we already have it, 0x258b98)
+pointToIFO (search for call to getDiscData, and it'll be near those calls - called like pointToIFO(param_1,0,0x80) and calls getDiscByteInternal inside) in our case 0x258a28
+SifIopReset (0x20e7d8), SifInitRpc (0x208d80), SifExitRpc (0x208f20) - for these, find SifIopReboot first, which is easy because of "rom0:UDNL " string (see https://github.com/ps2dev/ps2sdk/blob/8b7579979db87ace4b0aa5693a8a560d15224a96/ee/kernel/src/iopcontrol.c#L82) and look at the calls inside that match
+SifIopSync (0x20e958) - look for a call to SifIopReset and looping call just after
+edit build.sh to place correct loading address and offsets, and recompile!
+Insert fullpayload.bin into VIDEO_TS.IFO at offset 0x2ba4
+test, and see ule boot successfully in pcsx2!
+

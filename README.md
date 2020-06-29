@@ -6,17 +6,24 @@ For technical details please refer to my [blog post](https://cturt.github.io/fre
 ## Step 1: Identify your DVD Player Version
 Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has.
 
-For initial release only DVD Player version 3.10E is supported (as that's the console I have) - UPDATE: someone tested 3.10E exploit on 3.10U and it worked, so I guess region doesn't matter. In the future I may look at other firmware versions, and hopefully over time other developers from the scene will also contribute support for additional DVD Player versions. Don't bother trying 3.10 on a different firmware, it won't work...
+Not sure if region matters or not, but so far I only tested E and U so J and others aren't guaranteed.
 
-Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over USB storage), such as `3.10E.iso`. If you intend to make your own image containing additional homebrew / modified initial loader, please read on.
+Currently only support:
+
+3.10 (E or U)
+3.11 (E or U)
+
+Check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions. Don't bother trying on a not supported firmware, it won't work...
+
+Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over USB storage), such as `3.10EU.iso`. If you intend to make your own image containing additional homebrew / modified initial loader, please read on.
 
 ## Step 2: Copy your homebrew
-Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory (EG: `3.10E/`).
+Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory (EG: `3.10EU/`).
 
 ## Step 3: Make an image
-Once you've placed all the homebrew files you'd like into the directory, generate a UDF image of the directory. The easiest way is probably to install `genisoimage` and run the following (where `exploit.iso` is the output and `3.10E` is the directory containing `VIDEO_TS` and any homebrew):
+Once you've placed all the homebrew files you'd like into the directory, generate a UDF image of the directory. The easiest way is probably to install `genisoimage` and run the following (where `exploit.iso` is the output and `3.10EU` is the directory containing `VIDEO_TS` and any homebrew):
 
-    genisoimage -udf -o exploit.iso 3.10E
+    genisoimage -udf -o exploit.iso 3.10EU
 
 ## Step 4: Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which is beyond the scope of this README. With that said, if you aren't touching anything in `VIDEO_TS`, there shouldn't really be any reason for the exploit to fail.
