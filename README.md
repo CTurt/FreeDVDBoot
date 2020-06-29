@@ -4,14 +4,16 @@ PlayStation 2 DVD Player Exploit. This allows you to burn your own PlayStation 2
 For technical details please refer to my [blog post](https://cturt.github.io/freedvdboot.html).
 
 ## Step 1: Identify your DVD Player Version
-Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has.
+Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has. Still early in terms of support for different versions.
 
-Not sure if region matters or not, but so far I only tested 3.10 on E and U, and 3.11 isn't tested yet on hardware (J should work, not 100% sure regarding E or U - will update this page later when people ping me on it)
+Not sure if region matters or not, but language affects the exploit. Please set your PS2 language to English in the settings (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
+
+So far I only tested 3.10 on E and U, and 3.11 isn't confirmed working on hardware yet (J with English language should work, E and U not).
 
 Currently only support:
 
-3.10 (E or U)
-3.11 (E or U)
+3.10 (E or U - with English language set in settings)
+3.11 (J - with English language set in settings)
 
 Check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions. Don't bother trying on a not supported firmware, it won't work...
 

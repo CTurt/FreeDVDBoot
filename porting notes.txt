@@ -1,4 +1,4 @@
-3.11
+3.11J
 
 make memory dump for EE (PCSX2 save state, rename to zip extract, eeMemory.bin)
 search DVDVIDEO-VMG = 0x014331c8
