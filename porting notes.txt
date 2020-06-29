@@ -1,4 +1,10 @@
-3.11J (English language)
+OK, so turns out porting to different regions/languages is just a matter of finding new jump target, which isn't too difficult.
+
+Porting to different versions, means finding all the function addresses again, which is the time consuming bit.
+
+
+
+porting to 3.11J (English language)
 
 make memory dump for EE (PCSX2 save state, rename to zip extract, eeMemory.bin)
 search DVDVIDEO-VMG = 0x014331c8
@@ -47,3 +53,18 @@ edit build.sh to place correct loading address and offsets, and recompile!
 Insert fullpayload.bin into VIDEO_TS.IFO at offset 0x2ba4
 test, and see ule boot successfully in pcsx2!
 
+
+3.11E (English language)
+getDiscData and getDiscByte seem the same as in 3.11J
+overflow call is also at 0x257564
+fpIndex also 0x143bc4a
+oob jump also at 0x0025A618
+it's just the jump targets that are different
+dump 0x3b3050 to 0x3b3050 + 0xffff * 4 = 0x3F304C
+we have a nice one! 01500014 will work - same as we used for 3.10EU lol :)
+that's at 0x3EA438, so index (0x3EA438-0x3b3050)/4 = 0xDCFA
+so patch the IFO, same offset as for 3.11J (0x2fe2) to fa dc
+now break at writing payload (0x1500014)
+currentDiscBytePointer points to 0x014ff57d
+nearest landmark is "ABOVE 3" string at 0x14ff41b
+so payload goes at ABOVE 3 location in IFO + (0x014ff57d - 0x14ff41b) - 1 = 0x2954

@@ -8,11 +8,12 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 Language is also confirmed to affect the exploit (https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
 
-So far I only tested 3.10 on E and U on hardware, and 3.11 isn't confirmed working on hardware yet (J with English language).
+So far I only tested 3.10 on E and U on hardware, and 3.11 isn't confirmed working on hardware yet (will update when I get a response).
 
 Currently only support:
 
 - 3.10 (E or U - with English language set in settings)
+- 3.11 (E or U - with English language set in settings)
 - 3.11 (J - with English language set in settings)
 
 Check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions. Don't bother trying on a not supported region/firmware configuration, it won't work...
