@@ -6,7 +6,7 @@ For technical details please refer to my [blog post](https://cturt.github.io/fre
 ## Step 1: Identify your DVD Player Version
 Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has. Still early in terms of support for different versions, check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
 
-Language is also confirmed to affect the exploit (https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
+Language is also confirmed to [affect the exploit](https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
 
 Currently only support:
 
