@@ -1,4 +1,4 @@
-3.11J
+3.11J (English language)
 
 make memory dump for EE (PCSX2 save state, rename to zip extract, eeMemory.bin)
 search DVDVIDEO-VMG = 0x014331c8
@@ -15,9 +15,8 @@ note the base of the function pointer array, in this case 0x003b3050
 dump the memory from base till 0x003b3050 + 4 * 0xffff = 0x3F304C, group into 4 bytes and search for jump targets that fit within overflow range
 eg: searching for "14352... " I see some results
 must also be 4 byte aligned
-3.11 is actually pretty good, there are quite a few results that should work
+3.11 is actually pretty good, there are quite a few results that should work, if not you can try switching languages and there will be different jump targets to check
 0x01522944 looks pretty good, it's at 0x3E4A74, so index would be (0x3E4A74-0x003b3050)/4 = 0xC689
-// a backup incase that didn't work would be 0x14431114 (at 0x3B8164)
 ok, we have everything we need - let's make the IFO exploit file
 the copy size should be at the same offset since that's part of the spec, so no need to change that
 now run and break at the copy (0x257564), v1 is 0xffff so we're triggering the bug :)
