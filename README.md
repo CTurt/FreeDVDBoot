@@ -6,7 +6,7 @@ For technical details please refer to my [blog post](https://cturt.github.io/fre
 ## Step 1: Identify your DVD Player Version
 Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has. Still early in terms of support for different versions.
 
-Not sure if region matters or not, but language affects the exploit. Please set your PS2 language to English in the settings (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
+Not sure if region matters or not, but language is confirmed to affect the exploit (https://www.youtube.com/watch?v=zelVQcD7HCY). Please set your PS2 language to English in the system configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
 
 So far I only tested 3.10 on E and U, and 3.11 isn't confirmed working on hardware yet (J with English language should work, E and U not).
 
