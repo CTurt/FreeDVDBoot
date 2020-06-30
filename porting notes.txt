@@ -1,5 +1,7 @@
 OK, so turns out porting to different regions/languages is just a matter of finding new jump target, which isn't too difficult.
 
+Prefer using jump targets which aren't part of the language data, so that exploit is compatible with all languages. I might go back and redo 3.10 for this reason.
+
 Porting to different versions, means finding all the function addresses again, which is the time consuming bit.
 
 
@@ -81,3 +83,41 @@ payload needs to be modified to load stage 2 differently, I just moved it from 0
 payload for 3.10 is at 0x2bb4 copy that over
 
 
+
+
+3.04 (M tested only so far, but probably all regions work)
+getDiscData - 0x23e138
+getDiscByte - 0x23e068
+currentDiscBytePointer - 0x16ceee4
+endDiscBytePointer - 0x16ceee8
+
+0x23cb04 is the copy we want, but I actually decided to look at different buffer overflows in case it is useful for hybrid-ing, here they all are:
+
+Location 	Destination 	Max Size 	End
+0x23bd4c 	0x16c6d60 	0xffff * 0xc 	0x1786D54
+0x23c48c 	0x16c79d8 	0xffff * 4 	0x17079D4
+0x23cb04 	0x16c8cd4 	0xffff * 3 * 8 	0x1848CBC 	
+0x23cc74 	0x16c8cd4 	0xffff * 4 	0x1708CD0
+
+writing currentDiscBytePointer, it's value is 0x016ce444
+offset in IFO is 0x2744 - uh on we have collision with 3.10, might not be possible to make hybrid disc with both of those
+will need more crazy tricks to do that... we'll see
+in mean time, doing 3.04 only disc
+
+OOB call is at 0x23faac
+fpIndex at 0x16cf74a
+function pointer array - 0x95ace8
+select 0x95ace8 to 0x95ace8 + 0xffff * 4 = 0x99ACE4
+looking for jump targets, we have some starting with 0x018...
+01800180 at 0x95CF40, so index (0x95CF40-0x95ace8)/4 = 0x0896
+fpIndex offset in IFO is 0x2faa
+payload offset in IFO is 0x2d00
+
+getBufferInternal - 0x261548
+pointToIFO - 0x23dfc8
+getDiscData - 0x23e138
+SifIopReboot - 0x291528
+SifInitRpc - 0x208260
+SifExitRpc - 0x208400
+SifIopReset - 0x291358
+SifIopSync - 0x2914d8

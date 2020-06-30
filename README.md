@@ -11,6 +11,7 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 **Currently only support:**
 
+- 3.04 (tested only region M in emulator so far, but guess all regions EUMACDGJ will work - with English language set in settings) - please ping me and will update this page when confirmed working on hardware.
 - 3.10 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by CTurt, and others. [Only seems to work with English language](https://www.youtube.com/watch?v=zelVQcD7HCY).
 - 3.11 (all regions EUMACDGJ) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others. Language setting doesn't seem to matter ([Japanese language works at least](https://twitter.com/kood_infothief/status/1277600247024238592)).
 

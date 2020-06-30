@@ -2,7 +2,7 @@
 
 .section .text.startup
 
-.equ getBufferInternal, 0x2952f0
+.equ getBufferInternal, 0x261548
 .equ payload, (0x2000000 - 0x800) # End of RAM
 
 .global _start
@@ -53,10 +53,10 @@ boot:
 	j $v0
 	nop
 
-.space (_start + 0x2fe2 - 0x2ba4) - .
+.space (_start + 0x2faa - 0x2d00) - .
 fpIndex:
-	.byte 0x89
-	.byte 0xc6
+	.byte 0x96
+	.byte 0x08
 
-.space (_start + 0x3000 - 0x2ba4) - .
-.incbin "payload.bin"
+#.space (_start + 0x3000 - 0x2d00) - .
+#.incbin "payload.bin"
