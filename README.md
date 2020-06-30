@@ -11,19 +11,28 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 Currently only support:
 
-- 3.10 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by CTurt, and others
-- 3.11 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others
+- 3.10 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by CTurt, and others. [Only seems to work with English language](https://www.youtube.com/watch?v=zelVQcD7HCY).
+- 3.11 (all regions EUMACDGJ) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others. Language setting doesn't seem to matter ([Japanese language works at least](https://twitter.com/kood_infothief/status/1277600247024238592)).
 
-UPDATE: Experimental hybrid ISO for both 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English. Confirmed [working on 3.11](https://twitter.com/TheWizWiki/status/1277670129355161601).
+UPDATE: Experimental hybrid ISO for both 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English. Confirmed [working on 3.11](https://twitter.com/TheWizWiki/status/1277670129355161601). Reports of might [not be working on 3.10](https://github.com/CTurt/FreeDVDBoot/issues/10).
 
 Please don't bother trying on a not supported firmware/language configuration, it won't work...
-
-Language is also confirmed to [affect the exploit](https://www.youtube.com/watch?v=zelVQcD7HCY), so please set your PS2 language in the system configuration to match supported configuration (it should be possible to port to other languages in the future, but I'm prioritising different firmware versions instead of different lanauges to start with, since language can be changed).
 
 ### Step 2: Burn
 Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over USB storage), such as `3.10EU.iso`.
 
-You should use DVD-R (others work but put more strain on PS2 laser), and make sure to finalise the disc as burning option.
+You should use DVD-R with low burning speed (others work but put more strain on PS2 laser), and make sure to finalise the disc as burning option. Otherwise, you might run into issues reading the disc.
+
+## Troubleshooting - please read if the above didn't work
+Disc doesn't spin on slim console - press the lid down hard to ensure the sensors detect that the lid is closed.
+
+PS2 says "unable to read disc" - this doesn't seem to be a problem with the exploit, but just that your DVD laser might not work, or at least can't read the disc you burned. Please try a regular DVD video first, or DVD game to ensure one of those works. If that works, make sure you are finalising your disc when burning, use a low write speed, and I recommend DVD-R rather than any other types of DVD as those put more strain on the laser.
+
+PS2 enters black screen - if your PS2 DVD laser is really worn out, or you are using something difficult to read like DVD+RW burned on high speed, it might take some time before uLaunchELF actually starts. Please try waiting 3 minutes or so, per [this comment](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651337741).
+
+Also try cleaning the disc to remove dust, and try verifying the burn on PC.
+
+Try setting your console language to English, as that affects some versions of the exploit, and English language is the only one I tested.
 
 ## Custom disc setup
 If you intend to make your own image containing additional homebrew / modified initial loader, please read on. Step 1 is the same, first identify firmware version.
@@ -38,11 +47,6 @@ Once you've placed all the homebrew files you'd like into the directory, generat
 
 ### Step 4: Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which is beyond the scope of this README. With that said, if you aren't touching anything in `VIDEO_TS`, there shouldn't really be any reason for the exploit to fail.
-
-## Troubleshooting - please read
-Disc doesn't spin on slim console - press the lid down hard to ensure the sensors detect that the lid is closed
-
-PS2 says "unable to read disc" - your DVD laser might not work, please try a regular DVD video first. If that works, make sure you are finalising your disc when burning, and I recommend DVD-R rather than any other types of DVD as those put more strain on the laser.
 
 ## OPTIONAL: Replace the initial program
 I've included uLaunchELF recompiled with [DVD support](https://github.com/ps2dev/ps2sdk/pull/130) as the default initial program. It presents a menu which allows you to select any of the homebrew programs you chose to include on the disc (and also allows booting from USB).
