@@ -42,7 +42,11 @@ If you intend to make your own image containing additional homebrew / modified i
 Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory in the `Filesystem` (EG: `Filesystem/3.10EU/`).
 
 ### Step 3: Make an image
-Once you've placed all the homebrew files you'd like into the directory, generate a UDF image of the directory. The easiest way is probably to install `genisoimage` (comes pre-installed on many Linux distributions like Ubuntu) or `mkisofs` and run the following (where `exploit.iso` is the output and `Filesystem/3.10` is the directory containing `VIDEO_TS` and any homebrew):
+Once you've placed all the homebrew files you'd like into the directory, generate a UDF image of the directory (or ISO/UDF hybrid also works)
+
+On Windows, you can use a GUI like ImgBurn to make an disc image. It will give a warning that `VIDEO_TS.BUP` is missing, but just click continue anyway (PS2 doesn't require this file).
+
+On Linux the easiest way is probably to use `genisoimage` as it comes pre-installed on many Linux distributions like Ubuntu. Run the following on terminal (where `exploit.iso` is the output and `Filesystem/3.10` is the directory containing `VIDEO_TS` and any homebrew):
 
     genisoimage -udf -o exploit.iso Filesystems/3.10
 
