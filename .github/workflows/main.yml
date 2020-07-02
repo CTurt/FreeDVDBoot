@@ -17,8 +17,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install genisoimage
-      run: sudo apt-get install genisoimage
+    - name: Install genisoimage and rename folder
+      run: |
+        sudo apt-get install genisoimage
+        mv "Filesystems/3.10 + 3.11 hybrid/" "Filesystems/3.10 modified for the hybrid/"
   
     - name: Build
       working-directory: "PAYLOADS/PAYLOAD ${{ matrix.version }}"
