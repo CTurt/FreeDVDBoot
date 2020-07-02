@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['3.04', '3.10', '3.11', '3.10 modified for the hybrid']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install genisoimage
+      run: sudo apt-get install genisoimage
+  
+    - name: Build
+      working-directory: "PAYLOADS/PAYLOAD ${{ matrix.version }}"
+      run: |
+        ls -l
+        chmod +x build.sh
+        ./build.sh
+    - name: Generate iso
+      run: genisoimage -udf -o "exploit_${{ matrix.version }}.iso" "Filesystems/${{ matrix.version }}"
+      continue-on-error: true
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.version }}
+        path: "exploit_${{ matrix.version }}.iso"
