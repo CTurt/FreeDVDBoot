@@ -27,13 +27,19 @@ You should use DVD-R with low burning speed (others may work, but they put more 
 ## Troubleshooting - please read if the above didn't work
 Disc doesn't spin on slim console - press the lid down hard to ensure the sensors detect that the lid is closed.
 
-PS2 says "unable to read disc" - this doesn't seem to be a problem with the exploit, but just that your DVD laser might not work, or at least can't read the disc you burned. Please try a regular DVD video first, or DVD game to ensure one of those works. If that works, make sure you are finalising your disc when burning, use a low write speed, and I recommend using DVD-R instead of any other type of DVD as those put more strain on the laser.
+PS2 says "unable to read disc" - this doesn't seem to be a problem with the exploit, but just that your DVD laser might not work, or at least can't read the disc you burned. Please try a regular DVD video first, or DVD game (not CD game) to ensure one of those works. In fact, playing a real DVD video can recalibrate your laser and cause burned discs to work as [commented here](https://github.com/CTurt/FreeDVDBoot/issues/27). If that works, make sure you are finalising your disc when burning, use a low write speed, and I recommend using DVD-R instead of any other type of DVD as those put more strain on the laser.
 
-PS2 enters black screen - if your PS2 DVD laser is really worn out, or you are using something difficult to read like DVD+RW burned on high speed, it might take some time before uLaunchELF actually starts. Please try waiting 3 minutes or so, per [this comment](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651337741).
+PS2 enters black screen - if your PS2 DVD laser is really worn out, or you are using something difficult to read like DVD+RW burned on high speed, with a dusty disc, it might take some time before uLaunchELF actually starts. Please try waiting 3 minutes or so, per [this comment](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651337741).
+
+PS2 detects the disc as "PlayStation 2 disc" instead of "DVD Video" in the browser - Your PS2 has a modchip which is incorrectly preventing you from booting the DVD player. You do not need this exploit for a console with a modchip.
+
+Try unplugging your controller, and plugging it back in. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/103).
+
+Try removing all memory cards. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651970564).
 
 Also try cleaning the disc to remove dust, and try verifying the burn on PC.
 
-Try setting your console language to English, as that affects some versions of the exploit, and English language is the only one I tested.
+If all else fails, you can try using the prebuilt ISO specifically for your version instead of the hybrid image. I have had reports of people claiming that [the hybrid image doesn't work, whilst 3.11 does for them](https://github.com/CTurt/FreeDVDBoot/issues/13). I have also heard from some people that [the hybrid works for them, whilst the 3.10 image doesn't work for them](https://github.com/CTurt/FreeDVDBoot/issues/48). I have also had people claiming that [the exact same image both works and doesn't work for them](https://github.com/CTurt/FreeDVDBoot/issues/10#issuecomment-651739012), so who knows how accurate these reports are...
 
 ## Custom disc setup
 If you intend to make your own image containing additional homebrew / modified initial loader, please read on. Step 1 is the same; identify your firmware version.
