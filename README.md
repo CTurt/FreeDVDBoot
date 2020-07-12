@@ -15,7 +15,7 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 - 3.10 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by CTurt, and others. [Only seems to work with English language](https://www.youtube.com/watch?v=zelVQcD7HCY).
 - 3.11 (all regions EUMACDGJ) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others. ([Only seems to work with English language](https://twitter.com/kood_infothief/status/1277600247024238592)).
 
-UPDATE: Experimental hybrid ISO for both 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English. Confirmed [working on 3.11](https://twitter.com/TheWizWiki/status/1277670129355161601).
+UPDATE: Experimental hybrid ISO for both 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English. Seems to work on all slim consoles except for SCPH-90000 series (but 3.11 only disc seems to work on that unit - not sure what is the reason for this...).
 
 **Please don't bother trying on a non-supported firmware/language configuration, it won't work...**
 
@@ -36,6 +36,8 @@ PS2 detects the disc as "PlayStation 2 disc" instead of "DVD Video" in the brows
 Try unplugging your controller, and plugging it back in. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/103).
 
 Try removing all memory cards. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651970564).
+
+Try burning with different software. Apparently [for this user](https://github.com/CTurt/FreeDVDBoot/issues/108) ImgBurn didn't work, but CDBurnerXP  with 1x speed, compatibility settings, and finalize option worked.
 
 Also try cleaning the disc to remove dust, and try verifying the burn on PC.
 
