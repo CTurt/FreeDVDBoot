@@ -3,50 +3,88 @@ PlayStation 2 DVD Player Exploit. This allows you to burn your own PlayStation 2
 
 For technical details please refer to my [blog post](https://cturt.github.io/freedvdboot.html).
 
-## Basic setup
-Using prebuilt ISOs in this repo ([PREBUILT ISOs](https://github.com/CTurt/FreeDVDBoot/tree/master/PREBUILT%20ISOs) folder).
+## Easy setup for all PS2 Slim consoles / Bravia TV
+All you need is:
+
+- A compatible console (all PS2 Slim / Sony Bravia TV units are supported),
+- A DVD (not a CD), preferably a DVD-R as other types such as DVD+RW put more strain on the PS2 laser,
+- A computer with a built-in disc burner / external USB disc burner,
+
+### Step 1: Download the ISO
+Download [`PREBUILT ISOs/All PS2 Slims - English language.iso`](https://github.com/CTurt/FreeDVDBoot/raw/master/PREBUILT%20ISOs/all%20slims%20-%20English%20lang.iso)
+
+### Step 2: Burn the ISO
+Please check following to ensure a good burn which the PS2 will be able to read:
+
+- Clean off any dust from the disc,
+- Select lowest burning speed option,
+- Select finalise disc option,
+
+### Step 3: Set console language to English
+Your console must be in English language for the exploit to work (other languages cause memory contents to change).
+
+Boot without a disc inserted, press Circle to enter System Configuration and set your system language to English.
+
+### Step 4: Boot!
+Insert the disc into your console, and wait. It should boot into uLaunchELF within a few seconds.
+
+From uLaunchELF, you have the ability to run any homebrew you want over USB mass storage! Many people choose to run FreeMCBoot or Fortuna installer, so that they can boot off a memory card.
+
+## Troubleshooting - please read if the above didn't work
+| Problem                                                                            | Solution                                                                                                                                                                                                                                                                                         |
+|------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Disc doesn't spin on slim console                                                  | Press the lid down hard to ensure the sensors detect that the lid is closed. If still not working try placing some weight such as a book on the top of the console.                                                                                                                              |
+| PS2 detects the disc as "PlayStation 2 disc" instead of "DVD Video" in the browser | Your PS2 has a modchip which is incorrectly preventing the DVD player from launching. You do not need this exploit for a console with a modchip, but if you really want to try it some modchips offer the ability to temporarily disable themselves (by holding start when booting for example). |
+| PS2 displays "unable to read disc"                                                 | Please try playing a real DVD movie disc to verify that your console's DVD laser works; doing this can also recalibrate the laser which might solve the issue, as commented here.                                                                                                                |
+| PS2 freezes at black/red/green screen                                              | If your PS2 DVD laser is really worn out, or you are using something difficult to read like a dusty DVD+RW burned on high speed, it might take some time before uLaunchELF actually starts. Please try waiting 3 minutes or so, per [this comment](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651337741)                                            |
+Other suggestions that worked for others:
+
+- Try unplugging your controller, and plugging it back in. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/103).
+
+- Try removing all memory cards. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651970564).
+
+- Try burning with different software. Apparently [for this user](https://github.com/CTurt/FreeDVDBoot/issues/108) ImgBurn didn't work, but CDBurnerXP with 1x speed, compatibility settings, and finalize option worked.
+
+- Check that your console's language is set to English.
+
+## Phat consoles
+Phat consoles have many different firmware version revisions, which makes them harder to add support for. It also means you will need to identify your firmware version, and burn the matching ISO file.
+
+It's still early in terms of support for different versions, check back here later. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
 
 ### Step 1: Identify your DVD Player Version
-Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has. Still early in terms of support for different versions, check back here later for more support. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
+Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has.
 
 **Currently only support:**
 
-- 3.04 (tested only region M in emulator so far, but guess all regions EUMACDGJ will work - with English language set in settings) - please ping me and will update this page when confirmed working on hardware.
-- 3.10 (all regions EUMACDGJ - with English language set in settings) - confirmed working on hardware by CTurt, and others. [Only seems to work with English language](https://www.youtube.com/watch?v=zelVQcD7HCY).
-- 3.11 (all regions EUMACDGJ) - confirmed working on hardware by [MrMario2011](https://twitter.com/MrMario2011/status/1277586569738813440), and others. ([Only seems to work with English language](https://twitter.com/kood_infothief/status/1277600247024238592)).
+- 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
 
-UPDATE: Experimental hybrid ISO for both 3.10 and 3.11 support merged into one now available, burn `PREBUILT ISOs/hybrid 3.10 and 3.11.iso` and set language to English. Confirmed [working on 3.11](https://twitter.com/TheWizWiki/status/1277670129355161601).
+### Step 2: Download the ISO
+Download the ISO that corresponds to your firmware version.
 
 **Please don't bother trying on a non-supported firmware/language configuration, it won't work...**
 
-### Step 2: Burn
-Pre-built ISO files for supported DVD Players containing just uLaunchELF are provided in this repository for ease of use (which can be used to boot homebrew over a USB mass storage device). For example, if your DVD Player version is 3.10E, you would want to burn `PREBUILT ISOs/3.10 only - all regions - English lang.iso`.
+For example, if your DVD Player version is 3.04M, you would want to burn `PREBUILT ISOs/3.04 only - M+maybe other regions except J - English language.iso`.
 
-You should use DVD-R with low burning speed (others may work, but they put more strain on PS2 laser), and make sure to finalise the disc as burning option. Otherwise, you might run into issues reading the disc.
-
-## Troubleshooting - please read if the above didn't work
-Disc doesn't spin on slim console - press the lid down hard to ensure the sensors detect that the lid is closed.
-
-PS2 says "unable to read disc" - this doesn't seem to be a problem with the exploit, but just that your DVD laser might not work, or at least can't read the disc you burned. Please try a regular DVD video first, or DVD game to ensure one of those works. If that works, make sure you are finalising your disc when burning, use a low write speed, and I recommend using DVD-R instead of any other type of DVD as those put more strain on the laser.
-
-PS2 enters black screen - if your PS2 DVD laser is really worn out, or you are using something difficult to read like DVD+RW burned on high speed, it might take some time before uLaunchELF actually starts. Please try waiting 3 minutes or so, per [this comment](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651337741).
-
-Also try cleaning the disc to remove dust, and try verifying the burn on PC.
-
-Try setting your console language to English, as that affects some versions of the exploit, and English language is the only one I tested.
+### Step 3, 4, 5 - Burn the ISO, set console language to English, and boot!
+These steps are the same as described for slim above.
 
 ## Custom disc setup
-If you intend to make your own image containing additional homebrew / modified initial loader, please read on. Step 1 is the same; identify your firmware version.
+If you intend to make your own image containing additional homebrew / modified initial loader, please read on.
 
-### Step 2: Copy your homebrew
-Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory in the `Filesystem` (EG: `Filesystem/3.10EU/`).
+### Step 1: Copy your homebrew
+Once you've identified your console's DVD Player version, copy all of the homebrew you would like to include on the disc into that directory in the `Filesystems` (EG: `Filesystems/All PS2 slims (3.10 + 3.11) - English language/` is the one that supports all slim consoles).
 
-### Step 3: Make an image
-Once you've placed all the homebrew files you'd like into the directory, generate a UDF image of the directory. The easiest way is probably to install `genisoimage` (comes pre-installed on many Linux distributions like Ubuntu) or `mkisofs` and run the following (where `exploit.iso` is the output and `Filesystem/3.10` is the directory containing `VIDEO_TS` and any homebrew):
+### Step 2: Make an image
+Once you've placed all the homebrew files you'd like into the directory, generate a UDF (ISO9960/UDF hybrid also works) image of the directory (so `VIDEO_TS` is in the root).
 
-    genisoimage -udf -o exploit.iso Filesystems/3.10
+On Windows, you can use a GUI like ImgBurn to make an disc image. It will give a warning that `VIDEO_TS.BUP` is missing, but just click continue anyway (PS2 doesn't require this file).
 
-### Step 4: Test and burn
+On Linux the easiest way is probably to use `genisoimage` as it comes pre-installed on many Linux distributions like Ubuntu. Run the following on terminal (where `exploit.iso` is the output and `Filesystem/All PS2 slims (3.10 + 3.11) - English language` is the directory containing `VIDEO_TS` and any homebrew):
+
+    genisoimage -udf -o exploit.iso "Filesystems/All PS2 slims (3.10 + 3.11) - English language"
+
+### Step 3: Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which is beyond the scope of this README. With that said, if you aren't touching anything in `VIDEO_TS`, there shouldn't really be any reason for the exploit to fail.
 
 ## OPTIONAL: Replace the initial program
@@ -72,10 +110,13 @@ You can run `readelf -l` to verify your executable satisfies this requirement. F
 	  Segment Sections...
 	   00     .text .ctors .dtors .rodata .data .jcr .sdata .sbss .bss
 
+## Loading backups
+It's possible to patch backup images of commercial games to make them bootable using this exploit. I didn't want to maintain this tool, so it's not included in this repository, but can be found by searching for something like FreeDVDBoot ESR auto patcher.
+
 ## DEVELOPMENT: Replacing the loader payload
 The default payload will boot `VIDEO_TS/VTS_02_0.IFO` as an ELF file, but tweaks might be desired to improve compatibility, or maybe changing the behaviour to boot `BOOT.ELF` instead for instance.
 
-If you wish to update the loader payload, run `build.sh` inside `PAYLOAD` directory, and copy the output `fullpayload.bin` to `VIDEO_TS/VIDEO_TS.IFO` at offset `0x2bb4` (for 3.10E).
+If you wish to update the loader payload, run `build.sh` inside `PAYLOAD` directory, and copy the output `.bin` files into `VIDEO_TS/VIDEO_TS.IFO` at the offsets displayed by the output of the command.
 
 ## PORTING:
 Please read my technical writeup, to understand how the exploit works. I've also provided some notes about porting in the `porting notes.txt` file.
