@@ -11,7 +11,7 @@ All you need is:
 - A computer with a built-in disc burner / external USB disc burner,
 
 ### Step 1: Download the ISO
-Download [`PREBUILT ISOs/All PS2 Slims - English language.iso`](https://github.com/CTurt/FreeDVDBoot/raw/master/PREBUILT%20ISOs/all%20slims%20-%20English%20lang.iso)
+Download [`PREBUILT ISOs/All PS2 Slims - English language.iso`](https://github.com/CTurt/FreeDVDBoot/raw/master/PREBUILT%20ISOs/All%20PS2%20Slims%20-%20English%20language.iso)
 
 ### Step 2: Burn the ISO
 Please check following to ensure a good burn which the PS2 will be able to read:
