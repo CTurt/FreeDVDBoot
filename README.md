@@ -28,14 +28,16 @@ To do this, boot without a disc inserted, press **Circle** to enter **System Con
 ### Step 4: Boot!
 Insert the disc into your console, and wait. It should boot into **uLaunchELF** within a few seconds.
 
-From **uLaunchELF**, you have the ability to run any homebrew you want over USB **mass** storage! Many people choose to run **FreeMCBoot** or **Fortuna** installer, so that they can boot off a memory card.
+From **uLaunchELF**, you have the ability to run any homebrew you want over USB **mass** storage! Many people choose to run **FreeMCBoot** or **Fortuna** installer, as they find booting from a memory card more convenient.
+
+If you want to add additional homebrew to your DVD / replace uLaunchELF, please read from [Custom disc setup](#custom-disc-setup).
 
 ## Troubleshooting - please read if the above didn't work
 | Problem                                                                            | Solution                                                                                                                                                                                                                                                                                         |
 |------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Disc doesn't spin on slim console                                                  | Press the lid down hard to ensure the sensors detect that the lid is closed. If still not working try placing some weight such as a book on the top of the console.                                                                                                                              |
 | PS2 detects the disc as "PlayStation 2 disc" instead of "DVD Video" in the browser | Your PS2 has a modchip which is incorrectly preventing the DVD player from launching. You do not need this exploit for a console with a modchip, but if you really want to try it some modchips offer the ability to temporarily disable themselves (by holding start when booting for example). |
-| PS2 displays "unable to read disc"                                                 | Please try playing a real DVD movie disc to verify that your console's DVD laser works; doing this can also recalibrate the laser which might solve the issue, as commented here.                                                                                                                |
+| PS2 displays "unable to read disc"                                                 | Please try playing a real DVD movie disc to verify that your console's DVD laser works; doing this can also recalibrate the laser which might solve the issue, as [commented here](https://github.com/CTurt/FreeDVDBoot/issues/27).                                                                                                                |
 | PS2 freezes at black/red/green screen                                              | If your PS2 DVD laser is really worn out, or you are using something difficult to read like a dusty DVD+RW burned on high speed, it might take some time before uLaunchELF actually starts. Please try waiting 3 minutes or so, per [this comment](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651337741)                                            |
 
 Other suggestions that worked for others:
@@ -47,6 +49,8 @@ Other suggestions that worked for others:
 - Try burning with different software. Apparently [for this user](https://github.com/CTurt/FreeDVDBoot/issues/108) ImgBurn didn't work, but CDBurnerXP with 1x speed, compatibility settings, and finalize option worked.
 
 - Check that your console's language is set to English.
+
+**Please, only open a GitHub issue if you have read and tried all of the above. If you do open an issue, please confirm that you tried a real DVD movie and it worked on your system so that we know it's not just a laser failure; also include your DVD player version, the name of the ISO you tried, the type of DVD, and what happens when you launch the disc.**
 
 ## Phat consoles
 Phat consoles have many different firmware version revisions, which makes them harder to add support for. It also means you will need to identify your firmware version, and burn the matching ISO file.
@@ -88,7 +92,7 @@ On Linux the easiest way is probably to use `genisoimage` as it comes pre-instal
 ### Step 3: Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which is beyond the scope of this README. With that said, if you aren't touching anything in `VIDEO_TS`, there shouldn't really be any reason for the exploit to fail.
 
-## OPTIONAL: Replace the initial program
+## Replacing the initial program
 I've included uLaunchELF recompiled with [DVD support](https://github.com/ps2dev/ps2sdk/pull/130) as the default initial program. It presents a menu which allows you to select any of the homebrew programs you chose to include on the disc (and also allows booting from USB).
 
 Alternatively, if you would rather just boot into a single homebrew application, the initial program the exploit attempts to boot is located at `VIDEO_TS/VTS_02_0.IFO`, replace it with your desired `ELF` file, with the below caveat that compatibility might be lower than if you booted a program through uLaunchELF:
