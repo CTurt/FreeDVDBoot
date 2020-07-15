@@ -21,14 +21,14 @@ Please check following to ensure a good burn which the PS2 will be able to read:
 - Select finalise disc option,
 
 ### Step 3: Set console language to English
-Your console must be in English language for the exploit to work (other languages cause memory contents to change).
+Your console must be set to **English language** for the exploit to work (other languages cause memory contents to change).
 
-Boot without a disc inserted, press Circle to enter System Configuration and set your system language to English.
+To do this, boot without a disc inserted, press **Circle** to enter **System Configuration** and set your system language to **English**.
 
 ### Step 4: Boot!
-Insert the disc into your console, and wait. It should boot into uLaunchELF within a few seconds.
+Insert the disc into your console, and wait. It should boot into **uLaunchELF** within a few seconds.
 
-From uLaunchELF, you have the ability to run any homebrew you want over USB mass storage! Many people choose to run FreeMCBoot or Fortuna installer, so that they can boot off a memory card.
+From **uLaunchELF**, you have the ability to run any homebrew you want over USB **mass** storage! Many people choose to run **FreeMCBoot** or **Fortuna** installer, so that they can boot off a memory card.
 
 ## Troubleshooting - please read if the above didn't work
 | Problem                                                                            | Solution                                                                                                                                                                                                                                                                                         |
@@ -37,6 +37,7 @@ From uLaunchELF, you have the ability to run any homebrew you want over USB mass
 | PS2 detects the disc as "PlayStation 2 disc" instead of "DVD Video" in the browser | Your PS2 has a modchip which is incorrectly preventing the DVD player from launching. You do not need this exploit for a console with a modchip, but if you really want to try it some modchips offer the ability to temporarily disable themselves (by holding start when booting for example). |
 | PS2 displays "unable to read disc"                                                 | Please try playing a real DVD movie disc to verify that your console's DVD laser works; doing this can also recalibrate the laser which might solve the issue, as commented here.                                                                                                                |
 | PS2 freezes at black/red/green screen                                              | If your PS2 DVD laser is really worn out, or you are using something difficult to read like a dusty DVD+RW burned on high speed, it might take some time before uLaunchELF actually starts. Please try waiting 3 minutes or so, per [this comment](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651337741)                                            |
+
 Other suggestions that worked for others:
 
 - Try unplugging your controller, and plugging it back in. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/103).
