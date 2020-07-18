@@ -62,7 +62,7 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 **Currently only support:**
 
-- 3.03 (tested only region E in emulator as other BIOS versions aren't available to me, but guess other regions will work - with English language set in settings),
+- 3.03 (tested only region E in emulator as other BIOS versions aren't available to me, but guess other regions will work - any language),
 - 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
 
 ### Step 2: Download the ISO
@@ -125,4 +125,4 @@ The default payload will boot `VIDEO_TS/VTS_02_0.IFO` as an ELF file, but tweaks
 If you wish to update the loader payload, run `build.sh` inside `PAYLOAD` directory, and copy the output `.bin` files into `VIDEO_TS/VIDEO_TS.IFO` at the offsets displayed by the output of the command.
 
 ## PORTING:
-Please read my technical writeup, to understand how the exploit works. I've also provided some notes about porting in the `porting notes.txt` file.
+Please read my technical writeup, to understand how the exploit works. I've also provided some [notes about porting](https://cturt.github.io/FreeDVDBoot/portingnotes.html) in the [`gh-pages`](https://github.com/CTurt/FreeDVDBoot/tree/gh-pages) branch.
