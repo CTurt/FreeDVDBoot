@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h1>3.03 - 3.11</h1>
+<p>
+	These firmware versions all have the same getDiscData 0xffff * 3 * 8 buffer overflow of immediately controllable contents.
+</p>
+
+<table>
+  <tr>
+    <th></th>
+    <th>3.03</th>
+    <th>3.04J</th>
+    <th>3.04M</th>
+    <th>3.10</th>
+    <th>3.11</th>
+  </tr>
+  <tr>
+  	<th style="text-align: center" colspan="6">Symbols</th>
+  </tr>
+  <tr>
+    <th>getDiscData</th>
+    <td></td>
+    <td>0x23e150</td>
+    <td>0x23e138</td>
+    <td>0x25c9f0</td>
+    <td>0x258b98</td>
+  </tr>
+  <tr>
+    <th>getDiscByte</th>
+    <td></td>
+    <td></td>
+    <td>0x23e068</td>
+    <td>0x25c920</td>
+    <td>0x258ac8</td>
+  </tr>
+  <tr>
+    <th>currentDiscBytePointer</th>
+    <td></td>
+    <td></td>
+    <td>0x16ceee4</td>
+    <td>0x1411fe4</td>
+    <td>0x143b3e4</td>
+  </tr>
+  <tr>
+    <th>endDiscBytePointer</th>
+    <td></td>
+    <td></td>
+    <td>0x16ceee8</td>
+    <td>0x1411fe8</td>
+    <td>0x143b3e8</td>
+  </tr>
+  <tr>
+    <th>0xff * 3 * 8 overflow</th>
+    <td></td>
+    <td></td>
+    <td>0x23cb04</td>
+    <td>0x25b3bc</td>
+    <td>0x257564</td>
+  </tr>
+  <tr>
+    <th>fpIndex</th>
+    <td></td>
+    <td></td>
+    <td>0x16cf74a</td>
+    <td>0x141284a</td>
+    <td>0x143bc4a</td>
+  </tr>
+  <tr>
+    <th>fpArray</th>
+    <td></td>
+    <td></td>
+    <td>0x95ace8</td>
+    <td>0x5b9d40</td>
+    <td>0x3b3050</td>
+  </tr>
+  <tr>
+    <th>OOB call</th>
+    <td></td>
+    <td></td>
+    <td>0x23faac</td>
+    <td>0x25e388</td>
+    <td>0x25ab44</td>
+  </tr>
+  <tr>
+    <th>getBufferInternal</th>
+    <td></td>
+    <td></td>
+    <td>0x261548</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>pointToIFO</th>
+    <td></td>
+    <td></td>
+    <td>0x23dfc8</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>SifIopReboot</th>
+    <td></td>
+    <td></td>
+    <td>0x291528</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>SifInitRpc</th>
+    <td></td>
+    <td></td>
+    <td>0x208260</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>SifExitRpc</th>
+    <td></td>
+    <td></td>
+    <td>0x208400</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>SifIopReset</th>
+    <td></td>
+    <td></td>
+    <td>0x291358</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>SifIopSync</th>
+    <td></td>
+    <td></td>
+    <td>0x2914d8</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+  	<th style="text-align: center" colspan="6">Controlled memory ranges</th>
+  </tr>
+  <tr>
+    <th>Destination of large copy</th>
+    <td></td>
+    <td></td>
+    <td>0x16c8cd4</td>
+    <td>0x140bdd4</td>
+    <td>0x14351cc</td>
+  </tr>
+  <tr>
+    <th>Destination + max size</th>
+    <td></td>
+    <td></td>
+    <td>0x1848CBC</td>
+    <td>0x158BDBC</td>
+    <td>0x15B51B4</td>
+  </tr>
+  <tr>
+    <th>Sector buffer (getDiscByteInternal)</th>
+    <td></td>
+    <td></td>
+    <td>0x16cad40</td>
+    <td>0x140de40</td>
+    <td></td>
+  </tr>
+  <tr>
+  	<th style="text-align: center" colspan="6">Exploit values</th>
+  </tr>
+  <tr>
+    <th>currentDiscBytePointer value at overwrite</th>
+    <td></td>
+    <td></td>
+    <td>0x016ce444</td>
+    <td>0x01411544</td>
+    <td>0x0143a94c</td>
+  </tr>
+  <tr>
+    <th>Jump target</th>
+    <td></td>
+    <td></td>
+    <td>0x01800180</td>
+    <td>0x01500014</td>
+    <td>0x01500014</td>
+  </tr>
+  <tr>
+    <th>Address of jump target</th>
+    <td></td>
+    <td></td>
+    <td>0x95CF40</td>
+    <td>0x5f1f38</td>
+    <td>0x3EA438</td>
+  </tr>
+  <tr>
+  	<th style="text-align: center" colspan="6">IFO offsets</th>
+  </tr>
+  <tr>
+  	<th>currentDiscBytePointer</th>
+    <td></td>
+    <td></td>
+    <td>0x2744</td>
+    <td>0x2744</td>
+    <td>0x277c</td>
+  </tr>
+  <tr>
+  	<th>fpIndex</th>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+  	<th>Payload</th>
+    <td></td>
+    <td></td>
+    <td>0x2d00</td>
+    <td>0x2bb4</td>
+    <td>0x2954</td>
+  </tr>
+</table>
+
+<br>
+
+<h2>Conflicts</h2>
+<p>
+	In order to merge 2 exploits into a single ISO there must be either:
+</p>
+
+<ul>
+<li>No conflict between offset of currentDiscBytePointer corruption value in IFO file so that the two versions can specify different addresses (3.10 and 3.11),</li>
+<li>Controlled memory at a common address between the two versions so that currentDiscBytePointer can be written to controlled memory region for both (3.04J and 3.04M),</li>
+</ul>
+
+<p>
+	We might also be able to force a non-conflict between 2 versions by making use of 2 different buffer overflows. That would need to be experimented with. Until then, here is a table for the versions with conflicting currentDiscBytePointer IFO offsets which we would need to be common controlled memory regions for:
+</p>
+
+<table>
+	<tr>
+    	<th></th>
+        <th>Common controlled memory</th>
+    </tr>
+    <tr>
+    	<th>3.04 + 3.10</th>
+        <td>Couldn't find any</td>
+    </tr>
+    <tr>
+    	<th>3.04J + 3.04M</th>
+        <td></td>
+    </tr>
+</table>
+
+<br>
+
+<h1>&lt; 3.03</h1>
+<p>
+	These firmwares don't use the same getDiscData stream reader API, instead they manually call getBuffer and then memcpy from that sectorBuffer somewhere else. They still contain the vulnerability, but as it occurs from memcpy of OOB memory into other OOB memory, it is not just immediately possible for the full memory range overflowed with to contain fully controlled contents.
+</p>
+
+<p>
+	Let's look at 3.02 specifically.
+</p>
+
+<pre><code>0x256668 - getBufferInternal
+0x256888 - getBuffer</pre></code>
+
+<br>
+
+<p>
+	Searching calls to getBuffer, it's always a fixed number of sectors, 1 to 4, so as previously stated we can't just overflow straight into fpIndex with controlled contents as in &gt; 3.02.
+</p>
+
+<p>
+	But, <b>the buffer overflows definitely do still exist</b>. The function at 0x23e560 is a nice self contained one:
+</p>
+
+<pre><code>long bufferOverflow(void) {
+  long lVar1;
+  
+  lVar1 = getBuffer(s_VIDEO_TS.IFO_0090c210,(long)(int)DAT_013c7840,sectorBuffer,1,0);
+  if (lVar1 == 0) {
+    someLengthFromIFO = (ushort)sectorBuffer[0] * 0x100 + (ushort)sectorBuffer[1];
+    DAT_013c7890 = ((long)(int)((uint)sectorBuffer[4] << 0x18) | (ulong)sectorBuffer[5] << 0x10) +
+                   (ulong)sectorBuffer[6] * 0x100 + (ulong)sectorBuffer[7];
+    memcpy(&PTR_DAT_013c7898,sectorBuffer + 8,(uint)someLengthFromIFO * 0xc);
+    lVar1 = 0;
+  }
+  return lVar1;
+}</code></pre>
+
+<br>
+
+<p>
+	The memcpy call can overwrite memory from 0x013c7898 to 0x148788C (0x013c7898 + 0xffff * 0xc). The buffer overflow we are triggering in all other exploits because it gives biggest size is at 0x240284:
+</p>
+
+<pre><code>
+      length2 = (ushort)sectorBuffer[uVar33 + 2] * 0x100 + (ushort)sectorBuffer[uVar33 + 3];
+      length1 = (ushort)sectorBuffer[uVar33] * 0x100 + (ushort)sectorBuffer[uVar33 + 1];
+      length3 = (ushort)sectorBuffer[uVar33 + 4] * 0x100 + (ushort)sectorBuffer[uVar33 + 5];
+      DAT_013c9a2e = (ushort)sectorBuffer[uVar33 + 6] * 0x100 + (ushort)sectorBuffer[uVar33 + 7];
+      memcpy(&DAT_013c9a30,sectorBuffer + uVar33 + 8,
+             ((uint)length1 + (uint)length2 + (uint)length3) * 8);</code></pre>
+
+<br>
+
+<p>
+	fpIndex is at 0x13cfaca (leading to OOB call at 0x242f6c), and if we can set that to a controlled value we potentially have an exploit (if there's a good jump target).
+</p>
+
+<p>
+	fpIndex can be overwritten by either of the memcpy buffer overflows shown with a large enough size, but we're not corrupting it with data coming straight from disc; we only read at most 4 sectors (0x800 * 4) = 0x2000 into sectorBuffer, however we need to memcpy 0x609A bytes from sectorBuffer into 0x13c9a30 to overwrite fpIndex (0x13cfaca-0x13c9a30), so we'll be copying from uncontrolled OOB memory into fpIndex.
+</p>
+
+<p>
+    So, can we make that OOB memory contain controlled contents? Well, by making use of that buffer overflow, we can shift the question from "can we control fpIndex (0x13cfaca)", to "can we control sectorBuffer + 0x609A = 0x13D331A", since if we control that the memcpy will then copy into fpIndex from an address we can control the contents of.
+</p>
+
+<p>
+  Looking at all of the copies - maybe you will be lucky and find that it happens to line up that after a series of copies - some value you control ends up in fpIndex. Will need more time on it.
+</p>
+
+<br>
+
+</body>
+</html>

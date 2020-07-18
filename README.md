@@ -62,6 +62,7 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 **Currently only support:**
 
+- 3.03 (tested only region E in emulator as other BIOS versions aren't available to me, but guess other regions will work - with English language set in settings),
 - 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
 
 ### Step 2: Download the ISO
