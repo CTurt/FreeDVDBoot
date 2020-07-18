@@ -107,16 +107,16 @@ tr:nth-child(even) {
     <td>0x262360</td>
     <td></td>
     <td>0x261548</td>
-    <td></td>
-    <td></td>
+    <td>0x2986a0</td>
+    <td>0x2952f0</td>
   </tr>
   <tr>
     <th>pointToIFO</th>
     <td>0x2432c8</td>
     <td></td>
     <td>0x23dfc8</td>
-    <td></td>
-    <td></td>
+    <td>0x25c880</td>
+    <td>0x258a28</td>
   </tr>
   <tr>
     <th>SifIopReboot</th>
@@ -131,32 +131,32 @@ tr:nth-child(even) {
     <td>0x2082a0</td>
     <td></td>
     <td>0x208260</td>
-    <td></td>
-    <td></td>
+    <td>0x84180</td>
+    <td>0x208d80</td>
   </tr>
   <tr>
     <th>SifExitRpc</th>
     <td>0x208440</td>
     <td></td>
     <td>0x208400</td>
-    <td></td>
-    <td></td>
+    <td>0x84310</td>
+    <td>0x208f20</td>
   </tr>
   <tr>
     <th>SifIopReset</th>
     <td>0x291fb8</td>
     <td></td>
     <td>0x291358</td>
-    <td></td>
-    <td></td>
+    <td>0x84fe0</td>
+    <td>0x20e7d8</td>
   </tr>
   <tr>
     <th>SifIopSync</th>
     <td>0x292138</td>
     <td></td>
     <td>0x2914d8</td>
-    <td></td>
-    <td></td>
+    <td>0x85110</td>
+    <td>0x20e958</td>
   </tr>
   <tr>
   	<th style="text-align: center" colspan="6">Controlled memory ranges</th>
@@ -248,6 +248,13 @@ tr:nth-child(even) {
 
 <br>
 
+<h2>Testing</h2>
+<ul>
+  <li>3.03 has only been tested in region E - other regions need dumping and testing,</li>
+  <li>3.04 only region M and J are repacked - they are both different, other regions need dumping and testing,</li>
+  <li>3.10 and 3.11 have both been tested on all regions and work the same,</li>
+</ul>
+
 <br>
 
 <h2>Conflicts</h2>
@@ -261,7 +268,7 @@ tr:nth-child(even) {
 </ul>
 
 <p>
-	We might also be able to force a non-conflict between 2 versions by making use of 2 different buffer overflows. That would need to be experimented with. Until then, here is a table for the versions with conflicting currentDiscBytePointer IFO offsets which we would need to be common controlled memory regions for:
+	We might also be able to force a non-conflict between 2 versions by making use of 2 different buffer overflows. That would need to be experimented with. Until then, here is a table for the versions with conflicting currentDiscBytePointer IFO offsets which we would need to have common controlled memory regions for:
 </p>
 
 <table>
@@ -350,6 +357,11 @@ tr:nth-child(even) {
 </p>
 
 <br>
+
+<h2>Hunting for new vulnerabilities</h2>
+<p>
+  Those buffer overflows are really easy to find as the IFO parsing is the first thing the DVD player does. We'll probably want to reverse engineer deeper into things like the actual video decoding, etc, in order to see if more easily exploitable bugs are available; for that, I hope others will help collaborate and share notes.
+</p>
 
 </body>
 </html>
