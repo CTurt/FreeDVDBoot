@@ -23,19 +23,19 @@ load:
 	la $a2, 0x3000 / 0x800 # lba offset in file
 	la $a3, payload # Destination
 	la $t0, 0x800 / 0x800 # Count
-	la $t1, 0
 	la $v0, getBufferInternal
 	jalr $v0
-	nop
+	la $t1, 0
 
 boot:
 	la $v1, 0x64; la $a0, 0; syscall 0x64 # FlushCache data writeback
 	la $v1, 0x64; la $a0, 2; syscall 0x64 # FlushCache instruction invalidate
 
 	# Point stack to end of scratchpad RAM
-	la $sp, 0x70004000
+	#la $sp, 0x70004000
+	lui $sp, 0x7000
 
 	# Execute from relocated place
 	la $v0, ENTRY
 	j $v0
-	nop
+	ori $sp, 0x4000

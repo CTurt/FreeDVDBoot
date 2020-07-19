@@ -161,5 +161,6 @@ __attribute__((noreturn)) void _start(void) {
 	SifInitRpc(0);
 	SifExitRpc();
 
-	ExecPS2((void *)eh.entry, 0, 0, 0);
+	char *argv[] = { "cdrom0:\\VIDEO_TS\\VTS_02_0.IFO" };
+	ExecPS2((void *)eh.entry, 0, 1, &argv);
 }
