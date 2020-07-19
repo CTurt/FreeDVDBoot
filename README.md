@@ -64,6 +64,7 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 - 3.03 (tested only region E in emulator as other BIOS versions aren't available to me, but guess other regions will work - any language),
 - 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
+- 3.04 (J region only - use the "All Slim PS2s" image - with English language set in settings),
 
 ### Step 2: Download the ISO
 Download the ISO that corresponds to your firmware version.
