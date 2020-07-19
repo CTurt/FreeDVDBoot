@@ -95,7 +95,19 @@ __attribute__((noreturn)) void _start(void) {
 	int i;
 
 	// Identify version based on jump target location
-	if((*(void **)0x5f1f38) == (void *)0x1500014) {
+	if((*(void **)0x6D9C3C) == (void *)0x126b7e0) {
+		// 3.04J
+		pointToIFO = (void *)0x23dfe0;
+		getDiscData = (void *)0x23e150;
+
+		getBufferInternal = (void *)0x261560;
+
+		SifIopReset = (void *)0x84fe0;
+		SifIopSync = (void *)0x85110;
+		SifInitRpc = (void *)0x84180;
+		SifExitRpc = (void *)0x84310;
+	}
+	else if((*(void **)0x5f1f38) == (void *)0x1500014) {
 		// 3.10
 		pointToIFO = (void *)0x25c880;
 		getDiscData = (void *)0x25c9f0;
