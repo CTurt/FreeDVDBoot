@@ -49,7 +49,7 @@ tr:nth-child(even) {
   <tr>
     <th>getDiscByte</th>
     <td>0x243368</td>
-    <td></td>
+    <td>0x23e080</td>
     <td>0x23e068</td>
     <td>0x25c920</td>
     <td>0x258ac8</td>
@@ -57,7 +57,7 @@ tr:nth-child(even) {
   <tr>
     <th>currentDiscBytePointer</th>
     <td>0x15f42a4</td>
-    <td></td>
+    <td>0x1273ae4</td>
     <td>0x16ceee4</td>
     <td>0x1411fe4</td>
     <td>0x143b3e4</td>
@@ -65,7 +65,7 @@ tr:nth-child(even) {
   <tr>
     <th>endDiscBytePointer</th>
     <td>0x15f42a8</td>
-    <td></td>
+    <td>0x1273ae8</td>
     <td>0x16ceee8</td>
     <td>0x1411fe8</td>
     <td>0x143b3e8</td>
@@ -73,7 +73,7 @@ tr:nth-child(even) {
   <tr>
     <th>0xff * 3 * 8 overflow</th>
     <td>0x241d0c</td>
-    <td></td>
+    <td>0x23cb1c</td>
     <td>0x23cb04</td>
     <td>0x25b3bc</td>
     <td>0x257564</td>
@@ -81,7 +81,7 @@ tr:nth-child(even) {
   <tr>
     <th>fpIndex</th>
     <td>0x15f4b0a</td>
-    <td></td>
+    <td>0x127434a</td>
     <td>0x16cf74a</td>
     <td>0x141284a</td>
     <td>0x143bc4a</td>
@@ -89,7 +89,7 @@ tr:nth-child(even) {
   <tr>
     <th>fpArray</th>
     <td>0x923d88</td>
-    <td></td>
+    <td>0x6d4e68</td>
     <td>0x95ace8</td>
     <td>0x5b9d40</td>
     <td>0x3b3050</td>
@@ -97,7 +97,7 @@ tr:nth-child(even) {
   <tr>
     <th>OOB call</th>
     <td>0x0244E1C</td>
-    <td></td>
+    <td>0x23fad4</td>
     <td>0x23faac</td>
     <td>0x25e388</td>
     <td>0x25ab44</td>
@@ -105,7 +105,7 @@ tr:nth-child(even) {
   <tr>
     <th>getBufferInternal</th>
     <td>0x262360</td>
-    <td></td>
+    <td>0x261560</td>
     <td>0x261548</td>
     <td>0x2986a0</td>
     <td>0x2952f0</td>
@@ -113,7 +113,7 @@ tr:nth-child(even) {
   <tr>
     <th>pointToIFO</th>
     <td>0x2432c8</td>
-    <td></td>
+    <td>0x23dfe0</td>
     <td>0x23dfc8</td>
     <td>0x25c880</td>
     <td>0x258a28</td>
@@ -164,7 +164,7 @@ tr:nth-child(even) {
   <tr>
     <th>Destination of large copy</th>
     <td>0x15ec890</td>
-    <td></td>
+    <td>0x126d8d4</td>
     <td>0x16c8cd4</td>
     <td>0x140bdd4</td>
     <td>0x14351cc</td>
@@ -172,7 +172,7 @@ tr:nth-child(even) {
   <tr>
     <th>Destination + max size</th>
     <td>0x176C878</td>
-    <td></td>
+    <td>0x12AD8D0</td>
     <td>0x1848CBC</td>
     <td>0x158BDBC</td>
     <td>0x15B51B4</td>
@@ -183,7 +183,7 @@ tr:nth-child(even) {
   <tr>
     <th>currentDiscBytePointer value at overwrite</th>
     <td>0x015f1008</td>
-    <td></td>
+    <td>0x01273044</td>
     <td>0x016ce444</td>
     <td>0x01411544</td>
     <td>0x0143a94c</td>
@@ -191,7 +191,7 @@ tr:nth-child(even) {
   <tr>
     <th>Jump target</th>
     <td>0x15ea540</td>
-    <td></td>
+    <td>0x0126b7e0</td>
     <td>0x01800180</td>
     <td>0x01500014</td>
     <td>0x01500014</td>
@@ -199,26 +199,42 @@ tr:nth-child(even) {
   <tr>
     <th>Address of jump target</th>
     <td>0x928D24</td>
-    <td></td>
+    <td>0x6D9C3C</td>
     <td>0x95CF40</td>
     <td>0x5f1f38</td>
     <td>0x3EA438</td>
+  </tr>
+  <tr>
+    <th>Intermediate jump location</th>
+    <td></td>
+    <td>0x012811E4</td>
+    <td>Not required</td>
+    <td>Not required</td>
+    <td>Not required</td>
+  </tr>
+  <tr>
+    <th>Intermediate jump target</th>
+    <td></td>
+    <td>0x01281340</td>
+    <td>Not required</td>
+    <td>Not required</td>
+    <td>Not required</td>
   </tr>
   <tr>
   	<th style="text-align: center" colspan="6">IFO offsets</th>
   </tr>
   <tr>
   	<th>currentDiscBytePointer</th>
-    <td>0x1c6c</td>
-    <td></td>
-    <td>0x2744</td>
-    <td>0x2744</td>
-    <td>0x277c</td>
+    <td>0x1c6c (4 bytes)</td>
+    <td>0x2744 (2 bytes), 0x2c26 (2 bytes)</td>
+    <td>0x2744 ()</td>
+    <td>0x2744 (4 bytes)</td>
+    <td>0x277c (4 bytes)</td>
   </tr>
   <tr>
   	<th>fpIndex</th>
     <td>0x24D2</td>
-    <td></td>
+    <td>0x29ea</td>
     <td>0x2faa</td>
     <td>0x2faa</td>
     <td>0x2fe2</td>
@@ -226,7 +242,7 @@ tr:nth-child(even) {
   <tr>
   	<th>Payload</th>
     <td>0x0e8c</td>
-    <td></td>
+    <td>0x2880</td>
     <td>0x2d00</td>
     <td>0x2bb4</td>
     <td>0x2954</td>
@@ -248,6 +264,12 @@ tr:nth-child(even) {
 
 <br>
 
+<p>
+  In addition, that jump target does not fall within language data, so the 3.03 exploit supports all languages, not just English!
+</p>
+
+<br>
+
 <h2>Testing</h2>
 <ul>
   <li>3.03 has only been tested in region E - other regions need dumping and testing,</li>
@@ -264,27 +286,12 @@ tr:nth-child(even) {
 
 <ul>
 <li>No conflict between offset of currentDiscBytePointer corruption value in IFO file so that the two versions can specify different addresses (3.10 and 3.11),</li>
-<li>Controlled memory at a common address between the two versions so that currentDiscBytePointer can be written to controlled memory region for both (3.04J and 3.04M),</li>
+<li>Controlled memory at a common address between the two versions so that currentDiscBytePointer can be written to controlled memory region for both (3.04J and 3.10),</li>
 </ul>
 
 <p>
-	We might also be able to force a non-conflict between 2 versions by making use of 2 different buffer overflows. That would need to be experimented with. Until then, here is a table for the versions with conflicting currentDiscBytePointer IFO offsets which we would need to have common controlled memory regions for:
+	It's more complicated than that, because the currentDiscBytePointer is overwritten byte-by-byte.
 </p>
-
-<table>
-	<tr>
-    	<th></th>
-        <th>Common controlled memory</th>
-    </tr>
-    <tr>
-    	<th>3.04 + 3.10</th>
-        <td>Couldn't find any</td>
-    </tr>
-    <tr>
-    	<th>3.04J + 3.04M</th>
-        <td></td>
-    </tr>
-</table>
 
 <br>
 
