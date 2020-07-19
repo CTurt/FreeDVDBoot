@@ -119,6 +119,18 @@ __attribute__((noreturn)) void _start(void) {
 		SifInitRpc = (void *)0x84180;
 		SifExitRpc = (void *)0x84310;
 	}
+	else if((*(void **)0x95CF40) == (void *)0x1800180) {
+		// 3.04M
+		pointToIFO = (void *)0x23dfc8;
+		getDiscData = (void *)0x23e138;
+
+		getBufferInternal = (void *)0x261548;
+
+		SifIopReset = (void *)0x291358;
+		SifIopSync = (void *)0x2914d8;
+		SifInitRpc = (void *)0x208260;
+		SifExitRpc = (void *)0x208400;
+	}
 	else if((*(void **)0x5f1f38) == (void *)0x1500014) {
 		// 3.10
 		pointToIFO = (void *)0x25c880;
