@@ -46,9 +46,11 @@ Other suggestions that worked for others:
 
 - Try removing all memory cards. Apparently [that solved the issue for this user](https://github.com/CTurt/FreeDVDBoot/issues/3#issuecomment-651970564).
 
-- Try burning with different software. Apparently [for this user](https://github.com/CTurt/FreeDVDBoot/issues/108) ImgBurn didn't work, but CDBurnerXP with 1x speed, compatibility settings, and finalize option worked.
+- Try burning with different software. Apparently [for this user](https://github.com/CTurt/FreeDVDBoot/issues/108) and [this user](https://github.com/CTurt/FreeDVDBoot/issues/124#issuecomment-661231776) ImgBurn didn't work, but CDBurnerXP with 1x speed, compatibility settings, and finalize option worked.
 
 - Check that your console's language is set to English.
+
+- Check the GitHub repo to see if the image has been updated recently. Download the new one if it has.
 
 **Please, only open a GitHub issue if you have read and tried all of the above. If you do open an issue, please confirm that you tried a real DVD movie and it worked on your system so that we know it's not just a laser failure; also include your DVD player version, the name of the ISO you tried, the type of DVD, and what happens when you launch the disc.**
 
