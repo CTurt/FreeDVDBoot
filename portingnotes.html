@@ -365,10 +365,129 @@ tr:nth-child(even) {
 
 <br>
 
-<h2>Hunting for new vulnerabilities</h2>
+<h2>UDF vulnerabilities</h2>
 <p>
-  Those buffer overflows are really easy to find as the IFO parsing is the first thing the DVD player does. We'll probably want to reverse engineer deeper into things like the actual video decoding, etc, in order to see if more easily exploitable bugs are available; for that, I hope others will help collaborate and share notes.
+  The IFO buffer overflows are really easy to find as the IFO parsing is the first thing the DVD player does on EE side. We'll probably want to reverse engineer deeper into things like the actual video decoding, etc, in order to see if more easily exploitable bugs are available; for that, I hope others will help collaborate and share notes.
 </p>
 
+<br>
+
+<h2 id="readPartitionTables">readPartitionTables stack buffer overflow - Found by ElReino</h2>
+<p>
+  This is a stack buffer overflow occuring in UDFIO IOP processor module. From 2.10E, at 0xb37e4:
+</p>
+
+<pre><code>    memcpy(&lengthOfExtendedAttributes,DescriptorBuf + 0xa8,4);
+    memcpy(&lengthOfAllocationDescriptors,DescriptorBuf + 0xac,4);
+    memset(&AllocationDescriptors,0,8);
+    memcpy(&AllocationDescriptors,DescriptorBuf + lengthOfExtendedAttributes + 0xb0,
+           lengthOfAllocationDescriptors);</code></pre>
+
+<br>
+
+<p>
+  Interestingly, this was actually patched by Sony in firmware 2.14! We see it just uses fixed size of 8 bytes:
+</p>
+
+<pre><code>  memcpy(local_20,0x5ab8,4);
+  memcpy(auStack36,0x5abc,4);
+  memset(&local_18,0,8);
+  memcpy(&local_18,(int)&PTR_DAT_00005ac0 + local_20[0],8);
+</code></pre>
+
+<br>
+
+<p>
+  To find the vulnerability in an IOP memory dump, search for this instruction sequence:
+</p>
+
+<pre><code>08 00 06 24       _li        param_3,0x8</code></pre>
+
+<br>
+
+<p>
+  Until you get one that matches the memcpy/memset pattern shown above in the decompiler view.
+</p>
+
+<p>
+  If you are paranoid about cache, there's a really nice ROP gadget in the sound module. To find where the FlushDCache function is in your BIOS, run an IOP RAM dump through <a href="https://gist.github.com/CTurt/6eecc155e2b545a58bad9a65e866b4ab">this code</a>. Then look for calls to that function to find a nice ROP gadget, for 2.10 it's at 0x57f1c:
+</p>
+
+
+<pre><code>        00057f1c 3e 67 01 0c       jal        FlushDCacheWrapper
+        00057f20 00 00 00 00       _nop
+        00057f24 18 00 bf 8f       lw         ra,local_8(sp)
+        00057f28 14 00 b1 8f       lw         s1,local_c(sp)
+        00057f2c 10 00 b0 8f       lw         s0,local_10(sp)
+        00057f30 01 00 02 24       li         v0,0x1
+        00057f34 08 00 e0 03       jr         ra
+        00057f38 20 00 bd 27       _addiu     sp,sp,0x20</code></pre>
+
+<br>
+
+<p>
+  This will be our initial corrupted return address, then we'll jump to the uncached virtual address of the actual IOP payload entry-point, and first thing will be undoing the corruption from this ROP gadget (sub 0x20 from sp and restore s0/s1). The IOP payload loads a second IOP payload, which loads an ELF into EE RAM, then redirects return address on EE stack and IOP returns gracefully (which resumes EE and triggers EE payload).
+</p>
+
+<p>
+  Table of addresses for completed ports below. It should be possible to port to all versions from 1.00 - 2.13:
+<p>
+
+<table>
+  <tr>
+    <th>2.10</th>
+    <th>2.12</th>
+  </tr>
+  <tr>
+    <th>memcpy overflow</th>
+    <td>0xb37e4</td>
+    <td>0xb37e8</td>
+  </tr>
+  <tr>
+    <th>copy destination</th>
+    <td>0x01F6268</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>return address location</th>
+    <td>0x1f62ac</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>jump to return address</th>
+    <td>0xB3BF0</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>stage 1 address</th>
+    <td>0x1f62b0</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Flush D Cache IOP</th>
+    <td>0x0003044</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Flush I Cache IOP</th>
+    <td>0x00002f40</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Flush D Cache IOP caller (initial jump address)</th>
+    <td>0x57f1c</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Return address in ISO</th>
+    <td>0x00818f4</td>
+    <td></td>
+  </tr>
+  <tr>
+    <th>Second return address in ISO</th>
+    <td>0x0081910</td>
+    <td></td>
+  </tr>
+</table>
 </body>
 </html>
