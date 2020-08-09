@@ -68,7 +68,7 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 **Currently only support:**
 
-- 2.10 (tested on U and J regions on real hardware, any language works),
+- 2.10 (tested on U and J regions on real hardware, any language works) - UPDATE: currently region E isn't working will fix it soon,
 
 - 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
 
