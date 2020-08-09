@@ -3,6 +3,10 @@ PlayStation 2 DVD Player Exploit. This allows you to burn your own PlayStation 2
 
 For technical details please refer to my [blog post](https://cturt.github.io/freedvdboot.html).
 
+Read from [here](#easy-setup-for-all-ps2-slim-consoles--bravia-tv) if you have a Slim PS2.
+
+Read from [here](#phat-consoles) if you have a Phat PS2.
+
 ## Easy setup for all PS2 Slim consoles / Bravia TV
 All you need is:
 
@@ -57,12 +61,14 @@ Other suggestions that worked for others:
 ## Phat consoles
 Phat consoles have many different firmware version revisions, which makes them harder to add support for. It also means you will need to identify your firmware version, and burn the matching ISO file.
 
-It's still early in terms of support for different versions, check back here later. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions.
+It's still early in terms of support for different versions, check back here later. Hopefully over time other developers from the scene will also contribute support for additional DVD Player versions. The new exploit for 2.10 should be possible to port to all firmwares between 1.00 - 2.13 (Sony actually patched this one in 2.14 lol).
 
 ### Step 1: Identify your DVD Player Version
 Boot your PlayStation 2 without any disc inserted, and press Triangle to identify which DVD Player version your console has.
 
 **Currently only support:**
+
+- 2.10 (tested on U and J regions on real hardware, any language works),
 
 - 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
 
@@ -71,12 +77,12 @@ Download the ISO that corresponds to your firmware version.
 
 **Please don't bother trying on a non-supported firmware/language configuration, it won't work...**
 
-For example, if your DVD Player version is 3.04M, you would want to burn `PREBUILT ISOs/3.04 only - M+maybe other regions except J - English language.iso`.
+For example, if your DVD Player version is 2.10J, you would want to download `PREBUILT ISOs/2.10.iso`.
 
 ### Step 3, 4, 5 - Burn the ISO, set console language to English, and boot!
 These steps are the same as described for slim above.
 
-## Custom disc setup
+## Custom disc setup - Slim
 If you intend to make your own image containing additional homebrew / modified initial loader, please read on.
 
 ### Step 1: Copy your homebrew
@@ -94,7 +100,10 @@ On Linux the easiest way is probably to use `genisoimage` as it comes pre-instal
 ### Step 3: Test and burn
 I would recommend you test in PCSX2 first, but since [PCSX2 doesn't support loading the DVD Player](https://github.com/PCSX2/pcsx2/issues/1981), you have to decrypt and repack it yourself, which is beyond the scope of this README. With that said, if you aren't touching anything in `VIDEO_TS`, there shouldn't really be any reason for the exploit to fail.
 
-## Replacing the initial program
+## Custom disc setup - Phat
+Instructions for building the phat exploit coming soon.
+
+## Replacing the initial program - Slim
 I've included uLaunchELF recompiled with [DVD support](https://github.com/ps2dev/ps2sdk/pull/130) as the default initial program. It presents a menu which allows you to select any of the homebrew programs you chose to include on the disc (and also allows booting from USB).
 
 Alternatively, if you would rather just boot into a single homebrew application, the initial program the exploit attempts to boot is located at `VIDEO_TS/VTS_02_0.IFO`, replace it with your desired `ELF` file, with the below caveat that compatibility might be lower than if you booted a program through uLaunchELF:
@@ -117,10 +126,13 @@ You can run `readelf -l` to verify your executable satisfies this requirement. F
 	  Segment Sections...
 	   00     .text .ctors .dtors .rodata .data .jcr .sdata .sbss .bss
 
+## Replacing the initial program - Phat
+The ELF is read from `0x5bb000` in the ISO file.
+
 ## Loading backups
 It's possible to patch backup images of commercial games to make them bootable using this exploit. I didn't want to maintain this tool, so it's not included in this repository, but can be found by searching for something like FreeDVDBoot ESR auto patcher.
 
-## DEVELOPMENT: Replacing the loader payload
+## DEVELOPMENT: Replacing the loader payload - Slim
 The default payload will boot `VIDEO_TS/VTS_02_0.IFO` as an ELF file, but tweaks might be desired to improve compatibility, or maybe changing the behaviour to boot `BOOT.ELF` instead for instance.
 
 If you wish to update the loader payload, run `build.sh` inside `PAYLOAD` directory, and copy the output `.bin` files into `VIDEO_TS/VIDEO_TS.IFO` at the offsets displayed by the output of the command.
