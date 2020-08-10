@@ -7,6 +7,7 @@ _start:
 	# Point stack to end of scratchpad RAM
 	#la $sp, 0x70004000
 
+	# debug
 	la $v0, 0x01FFF7D0
 	sw $v0, 0($v0)
 

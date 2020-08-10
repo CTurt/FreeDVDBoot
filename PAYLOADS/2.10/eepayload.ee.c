@@ -25,12 +25,13 @@ int main(void) {
 
 	flush();
 	
-	SifInitRpc(0);
-	SifExitRpc();
-	while(!SifIopReset("", 0));
-	while(!SifIopSync()){};
-	
+	// These aren't needed to launch uLE at least, and make compatibility worse, so commented out...
 	//SifInitRpc(0);
+	//SifExitRpc();
+	//while(!SifIopReset("", 0));
+	//while(!SifIopSync()){};
+	
+	// //SifInitRpc(0);
 	
 	volatile void **entry_point_address = (void *)0x01FFF7E0;
 	ExecPS2(*entry_point_address, 0, 0, 0);

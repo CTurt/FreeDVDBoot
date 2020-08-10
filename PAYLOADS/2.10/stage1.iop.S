@@ -4,8 +4,10 @@
 # entry (0xb7548 + 0x5c700 - 0xb1000) = 0x62C48 (0xa0062C48) # hardware
 
 
+
 #readSector = 0xb260c # repacked
-readSector = (0xb260c + 0x5c700 - 0xb1000) # real hardware
+readSector = (0xb260c + 0x5c700 - 0xb1000) # real hardware - through wle
+#readSector = (0xb260c +  - 0xb1000 - 0x400) # real hardware
 
 flushIcache = 0x00002f40
 flushDcache = 0x0003044
@@ -36,10 +38,12 @@ _start:
 	
 	# Return gracefully back to original return address
 	#la $a0, 0x1f62ac # repacked
-	la $a0, (0x1f62ac + 0x1F3058 - 0x1f6258) # hardware
+	#la $a0, (0x1f62ac + 0x1F3058 - 0x1f6258) # hardware
+	la $a0, (0x1f62ac + 0x001F3058 - 0x1f6258) # hardware
 	
 	#la $ra, 0xb3630 # repacked
 	la $ra, (0xb3630 + 0x5c700 - 0xb1000) # hardware
+	#la $ra, (0xb3630 +  - 0xb1000 - 0x400) # hardware
 	
 	sw $ra, 0($a0)
 	
