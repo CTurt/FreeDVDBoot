@@ -68,7 +68,9 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 **Currently only support:**
 
-- 2.10 (all regions and languages),
+- 2.10 (certain models only?),
+
+- 2.12 (region U, others to be added soon),
 
 - 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
 
@@ -140,13 +142,13 @@ If you wish to update the loader payload, run `build.sh` inside `PAYLOAD` direct
 ## DEVELOPMENT: Replacing the loader payload - Phat
 Run the following to build a new `dvd.iso`:
 
-`make -f 2.10.mk`
+`make -f hardware.mk`
 
-If you want to test on PCSX2 using KrHacken's repacked DVD players, it loads `udfio` at a different base address, use the repacked makefile to build an image for testing on the emulator:
+If you want to test on PCSX2 using KrHacken's repacked DVD players, it loads `udfio` at a different base address, use the repacked Makefile to build an image for testing on the emulator:
 
-`make -f 2.10_repacked.mk`
+`make -f emulator.mk`
 
-`clean` before switching between these, or use `-B` flag.
+`clean` before switching between these different Makefiles, or use `-B` flag.
 
 ## PORTING:
 Please read my technical writeup, to understand how the exploit works. I've also provided some [notes about porting](https://cturt.github.io/FreeDVDBoot/portingnotes.html) in the [`gh-pages`](https://github.com/CTurt/FreeDVDBoot/tree/gh-pages) branch.

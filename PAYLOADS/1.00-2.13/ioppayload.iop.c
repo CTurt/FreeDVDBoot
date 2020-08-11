@@ -53,24 +53,24 @@ typedef struct {
 
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 
-/* All of these could be reimplemented here, but I'm lazy so we will use whatever
- * the IOP has already loaded. The addresses are hardcoded but should be easy
- * enough to extract from IOP memory by looking for their module names and magic
- * number 0x41C00000.
- */
+int (*readSectors)(int count, int sector, void *destination);
 
-int (*readSectors)(int count, int sector, void *destination) = (void *)READ_SECTORS;
+//int (*sceSifSetDma)(struct SifDmaTransfer *, int num) = (void *)0x16fc8;
+//int (*sceSifDmaStat)(int trid) = (void *)0x17170;
+//void (*flushIcache)(void) = (void*)0x2f40;
+//void (*flushDcache)(void) = (void*)0x3044;
+//void (*printf)(char *, ...) = (void *)0x1ab84; // 2.10
+//void (*printf)(char *, ...) = (void *)0x155f8; // 2.12
 
-int (*sceSifSetDma)(struct SifDmaTransfer *, int num) = (void *)0x16fc8;
-int (*sceSifDmaStat)(int trid) = (void *)0x17170;
-void (*flushIcache)(void) = (void*)0x2f40;
-void (*flushDcache)(void) = (void*)0x3044;
-void (*printf)(char *, ...) = (void *)0x1ab84;
+int (*sceSifSetDma)(struct SifDmaTransfer *, int num);
+int (*sceSifDmaStat)(int trid);
 
 static void transfer_to_ee(void *dest, void *src, unsigned int size);
 static void *memcpy(void *dest, void *src, unsigned int n);
 static void *memset(void *s, int c, unsigned int n);
 static void memset_ee(void *s, int c, unsigned int n);
+
+//#include "iopresolve.h"
 
 static void readData(void *dest, unsigned int offset, size_t n) {
 	//unsigned char buffer[SECTOR_SIZE];
@@ -110,18 +110,30 @@ static void readDataUnsafe(void *dest, unsigned int offset, size_t n) {
 void _start(void) {
 	extern unsigned char ee_crt0[];
 	extern unsigned int ee_crt0_size;
-	void *return_address = EE_CRT0_ADDRESS;
-	int one = 1;
+	void *return_address[4] __attribute__ ((aligned (16))) = { EE_CRT0_ADDRESS, 0, 0, 0 };
+	int one __attribute__ ((aligned (16))) = 1;
 	int i;
+
+	//sceSifSetDma = resolve("sifman", 7);
+	//sceSifDmaStat = resolve("sifman", 8);
+
+	sceSifSetDma = (void *)0x16fc8;
+	sceSifDmaStat = (void *)0x17170;
+
+	if(*(unsigned int *)READ_SECTORS_210 == 0x27bdffc8) // addiu $sp, $sp, -0x38
+		readSectors = (void *)READ_SECTORS_210;
+	else readSectors = (void *)READ_SECTORS_212;
 
 	transfer_to_ee(EE_CRT0_ADDRESS, ee_crt0, ee_crt0_size);
 	
-	/* Corrupt all known return addresses in the stack.
-	 */
-	transfer_to_ee((void *)0x14A5FF0, &return_address, sizeof(return_address)); /* 2.10E/A */
-	transfer_to_ee((void *)0x10007F0, &return_address, sizeof(return_address)); /* 2.10J */
-	transfer_to_ee((void *)0x12D1C70, &return_address, sizeof(return_address)); /* 2.10U */
+	// Corrupt all known return addresses in the stack, there might be a more universal way for IOP to redirect EE...
+	transfer_to_ee((void *)0x14A5FF0, &return_address, sizeof(return_address)); // 2.10E/A
+	transfer_to_ee((void *)0x10007F0, &return_address, sizeof(return_address)); // 2.10J
+	transfer_to_ee((void *)0x12D1C70, &return_address, sizeof(return_address)); // 2.10U
 	
+	transfer_to_ee((void *)0x12B8CF0, &return_address, sizeof(return_address)); // 2.12U
+
+
 
 	// Clear bit 0 of 0x208bb710 to make EE exit loop waiting for IOP, and return to our above payload
 	//unsigned int loopValue = 0x010004;
@@ -185,17 +197,11 @@ void _start(void) {
 			copied += k;
 			remaining -= k;
 		}
-
-		//unsigned char x[] = { 0x08, 0x00, 0xE0, 0x03, 0x01, 0x00, 0x42, 0x30, 0x01 };
-		//memcpy(buffer, &x, sizeof(x));
-		//memset(buffer + sizeof(x), 0, sizeofbuffer - sizeof(x));
-		//transfer_to_ee(eph[i].vaddr + (eph[i].filesz & ~(0x10 - 1)), buffer, (remaining + 0xf) & ~(0x10 - 1));
 	}
 	
 	transfer_to_ee(EE_ENTRYPOINT_ADDRESS, &eh.entry, sizeof(one));
 	
-	/* Signal EE that the ELF is loaded and ready to execute.
-	 */
+	// Signal EE that the ELF is loaded and ready to execute.
 	transfer_to_ee(EE_WAIT_ADDRESS, &one, sizeof(one));
 
 	//int loopValueJ = 0;
