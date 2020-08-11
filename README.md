@@ -127,7 +127,7 @@ You can run `readelf -l` to verify your executable satisfies this requirement. F
 	   00     .text .ctors .dtors .rodata .data .jcr .sdata .sbss .bss
 
 ## Replacing the initial program - Phat
-The ELF is read from `0x5bb000` in the ISO file.
+The ELF is read from `0x5bb000` in the ISO file, copy to that location with a hex editor to replace it.
 
 ## Loading backups
 It's possible to patch backup images of commercial games to make them bootable using this exploit. I didn't want to maintain this tool, so it's not included in this repository, but can be found by searching for something like FreeDVDBoot ESR auto patcher.
@@ -136,6 +136,17 @@ It's possible to patch backup images of commercial games to make them bootable u
 The default payload will boot `VIDEO_TS/VTS_02_0.IFO` as an ELF file, but tweaks might be desired to improve compatibility, or maybe changing the behaviour to boot `BOOT.ELF` instead for instance.
 
 If you wish to update the loader payload, run `build.sh` inside `PAYLOAD` directory, and copy the output `.bin` files into `VIDEO_TS/VIDEO_TS.IFO` at the offsets displayed by the output of the command.
+
+## DEVELOPMENT: Replacing the loader payload - Phat
+Run the following to build a new `dvd.iso`:
+
+`make -f 2.10.mk`
+
+If you want to test on PCSX2 using KrHacken's repacked DVD players, it loads `udfio` at a different base address, use the repacked makefile to build an image for testing on the emulator:
+
+`make -f 2.10_repacked.mk`
+
+`clean` before switching between these, or use `-B` flag.
 
 ## PORTING:
 Please read my technical writeup, to understand how the exploit works. I've also provided some [notes about porting](https://cturt.github.io/FreeDVDBoot/portingnotes.html) in the [`gh-pages`](https://github.com/CTurt/FreeDVDBoot/tree/gh-pages) branch.

@@ -59,13 +59,12 @@ typedef struct {
  * number 0x41C00000.
  */
 
-//int (*readSectors)(int count, int sector, void *destination) = (void *)0xb260c; // repacked ELF
-int (*readSectors)(int count, int sector, void *destination) = (void *)(0xb260c + 0x5c700 - 0xb1000); // real hardware
+int (*readSectors)(int count, int sector, void *destination) = (void *)READ_SECTORS;
 
 int (*sceSifSetDma)(struct SifDmaTransfer *, int num) = (void *)0x16fc8;
 int (*sceSifDmaStat)(int trid) = (void *)0x17170;
 void (*flushIcache)(void) = (void*)0x2f40;
-void (*flushDcache)(void) = (void*)0x3148;
+void (*flushDcache)(void) = (void*)0x3044;
 void (*printf)(char *, ...) = (void *)0x1ab84;
 
 static void transfer_to_ee(void *dest, void *src, unsigned int size);

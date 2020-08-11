@@ -1,18 +1,11 @@
 # ElReino & CTurt 2020
 
-# entry 0xb7548 # repacked
-# entry (0xb7548 + 0x5c700 - 0xb1000) = 0x62C48 (0xa0062C48) # hardware
-
-
-
-#readSector = 0xb260c # repacked
-readSector = (0xb260c + 0x5c700 - 0xb1000) # real hardware - through wle
-#readSector = (0xb260c +  - 0xb1000 - 0x400) # real hardware
+readSectors = READ_SECTORS
 
 flushIcache = 0x00002f40
 flushDcache = 0x0003044
 
-flushDcacheWrapper = 0x0057f1c
+#flushDcacheWrapper = 0x0057f1c
 
 #iop_payload_address = 0x460000
 #iop_payload_address = 0xa0460000
@@ -27,7 +20,7 @@ _start:
 	la $a0, (IOP_PAYLOAD_SIZE / 0x800) + 1 # count
 	la $a1, 0x700000 / 0x800 # sector
 	la $a2, iop_payload_address # destination
-	jal readSector
+	jal readSectors
 	
 	#jal flushIcache
 	#jal flushDcache
@@ -37,13 +30,8 @@ _start:
 	jalr $v0
 	
 	# Return gracefully back to original return address
-	#la $a0, 0x1f62ac # repacked
-	#la $a0, (0x1f62ac + 0x1F3058 - 0x1f6258) # hardware
-	la $a0, (0x1f62ac + 0x001F3058 - 0x1f6258) # hardware
-	
-	#la $ra, 0xb3630 # repacked
-	la $ra, (0xb3630 + 0x5c700 - 0xb1000) # hardware
-	#la $ra, (0xb3630 +  - 0xb1000 - 0x400) # hardware
+	la $a0, RETURN_ADDRESS_LOCATION
+	la $ra, ORIGINAL_RETURN_ADDRESS # hardware
 	
 	sw $ra, 0($a0)
 	
