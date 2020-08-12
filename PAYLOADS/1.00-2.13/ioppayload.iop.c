@@ -120,9 +120,10 @@ void _start(void) {
 	sceSifSetDma = (void *)0x16fc8;
 	sceSifDmaStat = (void *)0x17170;
 
-	if(*(unsigned int *)READ_SECTORS_210 == 0x27bdffc8) // addiu $sp, $sp, -0x38
-		readSectors = (void *)READ_SECTORS_210;
-	else readSectors = (void *)READ_SECTORS_212;
+	unsigned int addiu_magic = 0x27bdffc8; // addiu $sp, $sp, -0x38
+	if(*(unsigned int *)READ_SECTORS_210 == addiu_magic) readSectors = (void *)READ_SECTORS_210;
+	else if(*(unsigned int *)READ_SECTORS_212 == addiu_magic) readSectors = (void *)READ_SECTORS_212;
+	else if(*(unsigned int *)READ_SECTORS_213 == addiu_magic) readSectors = (void *)READ_SECTORS_213;
 
 	transfer_to_ee(EE_CRT0_ADDRESS, ee_crt0, ee_crt0_size);
 	
@@ -132,8 +133,10 @@ void _start(void) {
 	transfer_to_ee((void *)0x12D1C70, &return_address, sizeof(return_address)); // 2.10U
 	
 	transfer_to_ee((void *)0x12B8CF0, &return_address, sizeof(return_address)); // 2.12U
+	transfer_to_ee((void *)0x148D0F0, &return_address, sizeof(return_address)); // 2.12G
+	transfer_to_ee((void *)0xFE5FF0, &return_address, sizeof(return_address)); // 2.12J
 
-
+	transfer_to_ee((void *)0x01477B80, &return_address, sizeof(return_address)); // 2.13E/A
 
 	// Clear bit 0 of 0x208bb710 to make EE exit loop waiting for IOP, and return to our above payload
 	//unsigned int loopValue = 0x010004;

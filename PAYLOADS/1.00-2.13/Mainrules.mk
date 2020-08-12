@@ -10,16 +10,18 @@ IOP_OBJCOPY = iop-objcopy
 IOP_OBJDUMP = iop-objdump
 
 IOP_SYMBOLS = -DREAD_SECTORS_210=$(IOP_READ_SECTORS_210) -DORIGINAL_RETURN_ADDRESS_210=$(IOP_ORIGINAL_RETURN_ADDRESS_210) -DRETURN_ADDRESS_LOCATION_210=$(IOP_RETURN_ADDRESS_LOCATION_210) \
-	-DREAD_SECTORS_212=$(IOP_READ_SECTORS_212) -DORIGINAL_RETURN_ADDRESS_212=$(IOP_ORIGINAL_RETURN_ADDRESS_212) -DRETURN_ADDRESS_LOCATION_212=$(IOP_RETURN_ADDRESS_LOCATION_212)
+	-DREAD_SECTORS_212=$(IOP_READ_SECTORS_212) -DORIGINAL_RETURN_ADDRESS_212=$(IOP_ORIGINAL_RETURN_ADDRESS_212) -DRETURN_ADDRESS_LOCATION_212=$(IOP_RETURN_ADDRESS_LOCATION_212) \
+	-DREAD_SECTORS_213=$(IOP_READ_SECTORS_213) -DORIGINAL_RETURN_ADDRESS_213=$(IOP_ORIGINAL_RETURN_ADDRESS_213) -DRETURN_ADDRESS_LOCATION_213=$(IOP_RETURN_ADDRESS_LOCATION_213)
 
 IOP_CFLAGS = -O2 -G 0 -nostartfiles -nostdlib -ffreestanding -g $(IOP_SYMBOLS)
 
 EE_CFLAGS = -O2 -G 0 -nostartfiles -nostdlib -ffreestanding -Wl,-z,max-page-size=0x1
 
-IOP_STAGE1_SIZE = `stat -c '%s' stage1.iop.bin`
+IOP_STAGE1_SIZE_210_212 = `stat -c '%s' stage1_210_212.iop.bin`
+IOP_STAGE1_SIZE_213 = `stat -c '%s' stage1_213.iop.bin`
 IOP_PAYLOAD_SIZE = `stat -c '%s' ioppayload.iop.bin`
 
-dvd.iso: dvd.base.iso stage1.iop.bin ioppayload.iop.bin
+dvd.iso: dvd.base.iso stage1_210_212.iop.bin stage1_213.iop.bin ioppayload.iop.bin
 	#genisoimage -udf -o dvd.iso udf/
 	# @echo Insert 0x00000048 to offset 0x0818AC in dvd.iso
 	# @echo Insert 0x00004000 to offset 0x0818B0 in dvd.iso
@@ -29,13 +31,14 @@ dvd.iso: dvd.base.iso stage1.iop.bin ioppayload.iop.bin
 	cp dvd.base.iso dvd.iso
 
 	# Return address 0x00818f4 = 530676
-	printf $(STAGE1_LOAD_ADDRESS_STRING) | dd of=dvd.iso bs=1 seek=530676 count=4 conv=notrunc
+	printf $(STAGE1_LOAD_ADDRESS_STRING_210_212) | dd of=dvd.iso bs=1 seek=530676 count=4 conv=notrunc
 
 	# Old toolchains don't support this option, so just copy byte-by-byte...
 	# bs=4096 iflag=skip_bytes,count_bytes
 	
-	# 0x820f8 = 532728
-	dd if=stage1.iop.bin of=dvd.iso bs=1 seek=532728 count=$(IOP_STAGE1_SIZE) conv=notrunc
+	dd if=stage1_210_212.iop.bin of=dvd.iso bs=1 seek=$(STAGE1_ISO_210_212) count=$(IOP_STAGE1_SIZE_210_212) conv=notrunc
+	dd if=stage1_213.iop.bin of=dvd.iso bs=1 seek=$(STAGE1_ISO_213) count=$(IOP_STAGE1_SIZE_213) conv=notrunc
+	
 	# 0x700000 = 7340032
 	dd if=ioppayload.iop.bin of=dvd.iso bs=1 seek=7340032 count=$(IOP_PAYLOAD_SIZE) conv=notrunc
 
@@ -45,11 +48,15 @@ dvd.iso: dvd.base.iso stage1.iop.bin ioppayload.iop.bin
 %.iop.o: %.iop.S
 	$(IOP_AS) $< -o $@
 
-stage1.iop.elf: stage1.iop.S ioppayload.iop.bin
+stage1_210_212.iop.elf: stage1_210_212.iop.S ioppayload.iop.bin
 	$(IOP_OBJDUMP) -t ioppayload.iop.elf | grep " _start"
-	$(IOP_CC) -Ttext=$(STAGE1_LOAD_ADDRESS) $< -DENTRY=$(IOP_PAYLOAD_ENTRY) -DIOP_PAYLOAD_SIZE=$(IOP_PAYLOAD_SIZE) $(IOP_CFLAGS) -o $@
+	$(IOP_CC) $< -DENTRY=$(IOP_PAYLOAD_ENTRY) -DIOP_PAYLOAD_SIZE=$(IOP_PAYLOAD_SIZE) $(IOP_CFLAGS) -o $@
 
-ioppayload.iop.elf: ioppayload.iop.c eepayload.ee.bin
+stage1_213.iop.elf: stage1_213.iop.S ioppayload.iop.bin
+	$(IOP_OBJDUMP) -t ioppayload.iop.elf | grep " _start"
+	$(IOP_CC) $< -DENTRY=$(IOP_PAYLOAD_ENTRY) -DIOP_PAYLOAD_SIZE=$(IOP_PAYLOAD_SIZE) $(IOP_CFLAGS) -o $@
+
+%.iop.elf: %.iop.c eepayload.ee.bin
 	$(IOP_CC) -Ttext=$(IOP_PAYLOAD_ADDRESS) -DLOAD_ELF_FROM_OFFSET=$(LOAD_ELF_FROM_OFFSET) ioppayload.iop.c $(IOP_CFLAGS) -o $@
 
 

@@ -68,9 +68,9 @@ Boot your PlayStation 2 without any disc inserted, and press Triangle to identif
 
 **Currently only support:**
 
-- 2.10 (certain models only?),
+- 2.10 (certain models only? Working: SCPH-30001 R (ROMGEN 0160AC20010427), SCPH-30000 (ROMGEN 0160JC20010427), SCPH-30004 R (ROMGEN 0160EC20011004), Not working: SCPH-39004 - todo),
 
-- 2.12 (region U, others to be added soon),
+- 2.12 (regions U, J, and G, if any other regions exist for 2.12 let me know),
 
 - 3.04 (tested only region M in emulator so far, but guess most other regions EUMACDG, except for J will work - with English language set in settings),
 
