@@ -490,5 +490,32 @@ tr:nth-child(even) {
     <td></td>
   </tr>
 </table>
+
+<br>
+
+<h2 id="readSectorsOverflow">readSectors buffer overflow</h2>
+<p>
+  In 2.14, Sony removed the bounds check on sizes passed to readSectors, so we can reach the following with controlled sectorCount:
+</p>
+
+<pre><code>0xb31bc:
+
+iVar1 = readSectors(sectorCount,sectorNumber,0xb6c40);</code></pre>
+
+<b>
+
+<p>
+  In PCSX2 emulator, we can exploit this bug by overflowing into the stack (you can just spam payload addresses like 0xa00c0000 to that massive range of controlled memory and it will jump to it).
+</p>
+
+<p>
+  I was super excited by this, and started writing a nice exploit for 2.14+, but then krHacken burned the disc and found out that it isn't accepted by mechacon as a valid DVD Video, so we can't trigger this bug on the hardware. This makes sense; the change was too random to have been a security regression, especially as 2.14 was a release that fixed the readPartitionTables bug, otherwise it would have seemed too much like a backdoor lol
+</p>
+
 </body>
 </html>
+
+2.13
+
+bug 0xb33fc
+ret 0xb37c4
