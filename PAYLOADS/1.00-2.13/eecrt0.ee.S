@@ -19,6 +19,7 @@ _start:
 
 	jr $a0
 
+# Don't use on phat PS2... completely broken syscall
 #ExecPS2:
-	#la $v1, 0x07
-	#syscall 0x07 # ExecPS2
+#	la $v1, 0x07
+#	syscall 0x07 # ExecPS2

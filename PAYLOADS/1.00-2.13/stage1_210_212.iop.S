@@ -13,8 +13,14 @@ iop_payload_address = 0xa00fd000
 _start:
 	move $fp, $sp # We need to reset $fp as it gets trashed by memcpy
 
-check_210:
 	la $v1, 0x27bdffc8 # addiu $sp, $sp, -0x38
+
+check_110:
+	#la $v0, READ_SECTORS_110
+	#lw $t0, 0($v0)
+	#beq $t0, $v1, read_iop_payload
+
+check_210:
 	la $v0, READ_SECTORS_210
 	lw $t0, 0($v0)
 	beq $t0, $v1, read_iop_payload
@@ -35,8 +41,12 @@ read_iop_payload:
 	la $v0, ENTRY
 	jalr $v0
 
-check_210_again:
 	la $v1, 0x27bdffc8 # addiu $sp, $sp, -0x38
+
+check_110_again:
+
+
+check_210_again:
 	la $v0, READ_SECTORS_210
 	lw $v0, 0($v0)
 	la $a0, RETURN_ADDRESS_LOCATION_210

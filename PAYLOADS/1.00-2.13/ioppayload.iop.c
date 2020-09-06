@@ -72,6 +72,8 @@ static void memset_ee(void *s, int c, unsigned int n);
 
 //#include "iopresolve.h"
 
+#define BD2 (*(volatile int *)0xBD000020) //msflag
+
 static void readData(void *dest, unsigned int offset, size_t n) {
 	//unsigned char buffer[SECTOR_SIZE];
 	//unsigned char *buffer = (void *)0xfd000;
@@ -121,7 +123,8 @@ void _start(void) {
 	sceSifDmaStat = (void *)0x17170;
 
 	unsigned int addiu_magic = 0x27bdffc8; // addiu $sp, $sp, -0x38
-	if(*(unsigned int *)READ_SECTORS_210 == addiu_magic) readSectors = (void *)READ_SECTORS_210;
+	//if(*(unsigned int *)READ_SECTORS_110 == addiu_magic) readSectors = (void *)READ_SECTORS_110;
+	 if(*(unsigned int *)READ_SECTORS_210 == addiu_magic) readSectors = (void *)READ_SECTORS_210;
 	else if(*(unsigned int *)READ_SECTORS_212 == addiu_magic) readSectors = (void *)READ_SECTORS_212;
 	else if(*(unsigned int *)READ_SECTORS_213 == addiu_magic) readSectors = (void *)READ_SECTORS_213;
 
@@ -139,9 +142,13 @@ void _start(void) {
 	transfer_to_ee((void *)0x01477B80, &return_address, sizeof(return_address)); // 2.13E/A
 
 	// Clear bit 0 of 0x208bb710 to make EE exit loop waiting for IOP, and return to our above payload
-	//unsigned int loopValue = 0x010004;
+	unsigned int loopValue = 0x010004;
 	//transfer_to_ee((void *)0x208bb710, &loopValue, sizeof(loopValue)); // 2.10E
+	transfer_to_ee((void *)0x2087d110, &loopValue, sizeof(loopValue)); // 2.13E
 
+	// We wait for EE side to be ready before sending ELF.
+	while(!(SifGetMSFlag() & 1));
+	SifSetMSFlag(3);
 	
 	//unsigned char *buffer = (void *)0xfe000;
 	unsigned char *buffer = (void *)0xBB800;
@@ -244,6 +251,34 @@ static void *memset(void *s, int c, unsigned int n)
 		((unsigned char *)s)[i] = c;
 	
 	return s;
+}
+
+static int SifGetMSFlag()
+{
+	int a, b;
+	
+	b = BD2;
+	do {
+		a=b;
+		b=BD2;
+	} while(a != b);
+	
+	return a;
+}
+
+static int SifSetMSFlag(unsigned int value)
+{
+	int a, b;
+	
+	BD2 = value;
+	
+	b = BD2;
+	do {
+		a=b;
+		b=BD2;
+	} while(a != b);
+	
+	return a;
 }
 
 asm("\n\

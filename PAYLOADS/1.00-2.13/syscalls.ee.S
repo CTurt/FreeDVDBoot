@@ -1,9 +1,45 @@
-# ElReino 2020
+# ElReino and CTurt 2020
 
 # Since GCC does something strange, we can't write syscall thunks directly in C
 # as GCC adds move $v1, $v0 directly after jr $ra, effectively trashing $v0.
 # I don't know why this happens, but I do know enough about GCC that this
 # approach will most probably be easier. But feel free to try fixing it.
+
+.global GetThreadId
+GetThreadId:
+        la $v1, 0x2f
+        syscall 0x2f
+        jr $ra
+
+.global ChangeThreadPriority
+ChangeThreadPriority:
+        la $v1, 0x29
+        syscall 0x29
+        jr $ra
+
+.global CancelWakeupThread
+CancelWakeupThread:
+        la $v1, 0x35
+        syscall 0x35
+        jr $ra
+
+.global TerminateThread
+TerminateThread:
+        la $v1, 0x25
+        syscall 0x25
+        jr $ra
+
+.global DeleteThread
+DeleteThread:
+        la $v1, 0x21
+        syscall 0x21
+        jr $ra
+
+.global SifSetReg
+SifSetReg:
+       la $v1, 0x79
+       syscall 0x79
+       jr $ra
 
 .global SifGetReg
 SifGetReg:
